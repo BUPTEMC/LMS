@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			
+		</style>
+	</head>
+	<body>
+	<form id="t">
+    	<table id="table">
+        <tr></td><input type="text" value="1" /></td></tr>
+        <table>
+        <input type="button" id="btn" value="提交" />
+        <input type="button" id="new" value="新增" />
+    </form>
+    <script>
+    	    document.getElementById('new').onclick = function() {
+			    var input = document.createElement('input');
+			    var tr = document.createElement('tr');
+			    var td = document.createElement('td');
+			    td.appendChild(input);
+			    tr.appendChild(td);
+			    document.getElementById('table').appendChild(tr);	
+		    };
+		    document.getElementById('btn').onclick = function(){
+			    var inps = document.getElementsByTagName('input'),
+			    len = inps.length,count = 0,arr = [];
+			
+			    for(var i = 0; i < len; i++){
+				    if(inps[i].type == 'text'){
+					    arr.push(inps[i]);
+				    }	
+			    }
+			
+			    for(var i = 0; i < arr.length; i++){
+				    if(inps[i].value != ''){
+					    count++;
+				    }else{
+					    count--;	
+				    }
+			    }
+			
+			    if(count == arr.length){
+				    alert('提交')
+				    document.getElementById('t').submit();	
+			    }else{
+				    alert('有空值')	
+			    }
+		    };
+    </script>
+    </body>
+</html>

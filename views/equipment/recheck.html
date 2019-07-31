@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="../../stylesheets/spectre.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-icons.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-exp.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-0.5.8/docs/dist/docs.min.css">
+  <title>实验室管理系统</title>
+    <style type="text/css" rel="stylesheet">
+      .wrap{margin:0 auto;width:700px;} 
+    </style>
+  </head>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.5.0/js/md5.js"></script>
+  <script type="text/javascript" src="/javascripts/equipment/addAccessory.js"></script>
+  <body onload="checkuserCookieandpush({{id}},'{{password}}','{{name}}','{{datas1.source}}');today()">
+    <div class="docs-container off-canvas off-canvas-sidebar-show">
+      <div class="docs-navbar"><a class="off-canvas-toggle btn btn-link btn-action" href="#sidebar"><i class="icon icon-menu"></i></a>
+        <ul class="tab">
+            <li class="tab-item"><a href="/homePage?id={{id}}&password={{password}}&name={{name}}">首页</a></li>
+            <li class="tab-item"><a href="/homePage/personal?id={{id}}&password={{password}}&name={{name}}" id="demo">{{name}}</a></li>
+            <li class="tab-item"><a href="/">退出</a></li>
+        </ul>
+      </div>
+      <div class="docs-sidebar off-canvas-sidebar" id="sidebar">
+        <div class="docs-brand">
+          <h3>实验室管理系统</h3>
+        </div>
+        <div class="docs-nav">
+          <div class="accordion-container">
+            <div class="accordion">
+              <input id="accordion-getting-started" type="checkbox" name="docs-accordion-checkbox" hidden=""/>
+              <label class="accordion-header c-hand" for="accordion-getting-started">事件</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="">标准查新</a>
+                  </li>
+                  <li class="menu-item"><a href="">内审</a>
+                  </li>
+                  <li class="menu-item"><a href="">管理评审</a>
+                  </li>
+                  <li class="menu-item"><a href="">人员培训</a>
+                  </li>
+                  <li class="menu-item"><a href="">能力验证</a>
+                  </li>
+                  <li class="menu-item"><a href="">期间核查</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/testProject?id={{id}}&password={{password}}&name={{name}}">测试项目</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/securityCheck?id={{id}}&password={{password}}&name={{name}}">安全检查</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/contract?id={{id}}&password={{password}}&name={{name}}">合同管理</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion">
+              <input id="equipment" type="checkbox" name="docs-accordion-checkbox" hidden="" checked="checked"/>
+              <label class="accordion-header c-hand" for="equipment">仪器设备</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="/homePage/list?id={{id}}&password={{password}}&name={{name}}"><strong>新设备入库</strong></a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/repair?id={{id}}&password={{password}}&name={{name}}">设备维修</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/maintenance?id={{id}}&password={{password}}&name={{name}}">设备保养</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/use?id={{id}}&password={{password}}&name={{name}}">设备使用登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/inout?id={{id}}&password={{password}}&name={{name}}">设备出入登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/outage?id={{id}}&password={{password}}&name={{name}}">设备停用申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/restoreOutage?id={{id}}&password={{password}}&name={{name}}">设备恢复使用申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/equipmentDisabled?id={{id}}&password={{password}}&name={{name}}">设备报废申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/adjust?id={{id}}&password={{password}}&name={{name}}">设备检定校准</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="off-canvas-content">
+        <div class="docs-content" id="content">
+          <div class="container" id="experimentals">
+            <h3 class="s-title">{{datas1.name}}验收记录登记表</h3>
+              <div class="docs-demo columns">
+              <div class="column col-9 col-sm-12">
+                <form class="form-horizontal" action="/homePage/recheck?id={{id}}&password={{password}}&name={{name}}" method="post">
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-8">设备编号</label>
+                    </div>
+                    <div class="col-9">
+                      <input class="form-input" id="input-example-8" placeholder="设备编号" name="number" value="{{datas1.id}}" readonly="readonly">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-9">设备名称</label>
+                    </div>
+                    <div class="col-9">
+                      <input class="form-input" id="input-example-9" placeholder="设备名称" name="name" value="{{datas1.name}}" readonly="readonly">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-10">设备来源</label>
+                    </div>
+                    <div class="col-9">
+                      <select class="form-select" name="source">
+                        <option value="购买" id="购买">购买</option>
+                        <option value="租借" id="租借">租借</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-22">规格型号</label>
+                    </div>
+                    <div class="col-9">
+                      <input class="form-input" id="input-example-22" placeholder="规格型号" name="version" value="{{datas1.version}}" required="required">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-23">出厂编号</label>
+                    </div>
+                    <div class="col-9">
+                      <input class="form-input" id="input-example-23" placeholder="出厂编号" name="manufactureNum" value="{{datas1.manufactureNum}}" required="required">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-24">制造日期</label>
+                    </div>
+                    <div class="col-9">
+                      <input class="form-input" id="input-example-24" type="date" name="manufactureDate" value="{{datas1.manufactureDate}}" required="required">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-25">制造厂</label>
+                    </div>
+                    <div class="col-9">
+                      <input class="form-input" id="input-example-25" placeholder="制造厂" name="manufacturer" value="{{datas1.manufacturer}}" required="required">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-26">价格</label>
+                    </div>
+                    <div class="col-9">
+                      <div class="input-group">
+                        <input class="form-input" id="input-example-26" type="number" placeholder="1" name="price" value="{{datas1.price}}" required="required">
+                        <span class="input-group-addon">元</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-11">外观检查</label>
+                    </div>
+                    <div class="col-9">
+                      <select class="form-select" name="appearance">
+                        <option value="外观完好，设备完好" id="外观完好，设备完好">外观完好，设备完好</option>
+                        <option value="外观有破损，但设备完好" id="外观有破损，但设备完好">外观有破损，但设备完好</option>
+                        <option value="外观与设备均有破损" id="外观与设备均有破损">外观与设备均有破损</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-12">初步检查</label>
+                    </div>
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-13">是否可以正常组装</label>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-5">
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="assembled" checked="" value="1"><i class="form-icon"></i> 合格
+                      </label>
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="assembled" value="0"><i class="form-icon"></i> 不合格
+                      </label>
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="assembled" value="-1"><i class="form-icon"></i> 无
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                    </div>
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-14">开机是否正常</label>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-5">
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="startingUp" checked="" value="1"><i class="form-icon"></i> 合格
+                      </label>
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="startingUp" value="0"><i class="form-icon"></i> 不合格
+                      </label>
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="startingUp" value="-1"><i class="form-icon"></i> 无
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                    </div>
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-15">存储是否正常</label>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-5">
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="storage" checked="" value="1"><i class="form-icon"></i> 合格
+                      </label>
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="storage" value="0"><i class="form-icon"></i> 不合格
+                      </label>
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="storage" value="-1"><i class="form-icon"></i> 无
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                    </div>
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-16">关机是否正常</label>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-5">
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="shutdown" checked="" value="1"><i class="form-icon"></i> 合格
+                      </label>
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="shutdown" value="0"><i class="form-icon"></i> 不合格
+                      </label>
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="shutdown" value="-1"><i class="form-icon"></i> 无
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                    </div>
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-17">是否正常测量数据</label>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-5">
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="measure" checked="" value="1"><i class="form-icon"></i> 合格
+                      </label>
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="measure" value="0"><i class="form-icon"></i> 不合格
+                      </label>
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="measure" value="-1"><i class="form-icon"></i> 无
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-18">新旧程度</label>
+                    </div>
+                    <div class="col-9">
+                      <select class="form-select" name="newDegree">
+                        <option value="全新">全新</option>
+                        <option value="99新及展示机">99新及展示机</option>
+                        <option value="9成新以上">9成新以上</option>
+                        <option value="8成新以上">8成新以上</option>
+                        <option value="7成新以上">7成新以上</option>
+                        <option value="6成新及以下">6成新及以下</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <pre class="code">
+                      <code>
+说明：
+（1）99新及展示机：极少使用或者是展示机，原装配件齐全，肉眼见不到使用的痕迹，
+无任何功能缺陷，能正常使用、无维修史。
+（2）9成新以上：外观有轻微花痕，但外观完整，无生锈、无掉漆和外观损伤，无任何
+功能缺陷，不影响正常使用、无维修史。
+（3）8成新以上：有少许划痕或者明显的使用痕迹，无生锈、无掉漆和外观损伤，无维
+修史，无任何功能缺陷，不影响正常使用。
+（4）7成新以上：外观磨损，有生锈或掉漆，有维修史,现无任何功能缺陷，不影响正
+常使用。
+（5）6成新及以下：外观严重磨损，可能有生锈或大面积掉漆，有维修史,辅助功能有
+缺陷，可能影响正常使用。
+                      </code>
+                    </pre>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-19">附件及备品配件</label>
+                    </div>
+                    <div class="col-1">
+                      <label class="form-label">名称</label>
+                    </div>
+                    <div class="col-3">
+                      <input class="form-input" id="input-example-19" placeholder="配件名称" name="acceName">
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-1">
+                      <label class="form-label">数量</label>
+                    </div>
+                    <div class="col-1">
+                      <input class="form-input" id="input-example-19" type="number" placeholder="1" name="acceNum">
+                    </div>
+                  </div>
+                  <div id="plus">
+                  </div>
+                  <div class="form-group">
+                  </div>
+                  <div class="form-group">
+                    <div class="col-6">
+                    </div>
+                    <div class="col-2">
+                      <button type="button" class="btn btn-primary btn-action btn-lg" onclick="add();"><i class="icon icon-plus"></i></button>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-20">验收人员</label>
+                    </div>
+                    <div class="col-9">
+                      <label class="form-checkbox form-inline">
+                        <input type="checkbox" checked="" value="{{name}}" onclick="return false" name="member"><i class="form-icon"></i>{{name}}
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-27">保管人员</label>
+                    </div>
+                    <div class="col-9">
+                      <label class="form-checkbox form-inline">
+                        <input type="checkbox" checked="" value="{{name}}" onclick="return false" name="saveMember"><i class="form-icon"></i>{{name}}
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-21">验收意见</label>
+                    </div>
+                    <div class="col-4">
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="opinion" checked="" value="1"><i class="form-icon"></i> 合格，可以入库
+                      </label>
+                    </div>
+                    <div class="col-4">
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="opinion" value="0"><i class="form-icon"></i> 不合格，联系商家
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-21">是否需要检定或校准</label>
+                    </div>
+                    <div class="col-2">
+                    </div>
+                    <div class="col-2">
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="correct" checked="" value="1"><i class="form-icon"></i> 是
+                      </label>
+                    </div>
+                    <div class="col-4">
+                      <label class="form-radio form-inline">
+                        <input type="radio" name="correct" value="0"><i class="form-icon"></i> 否
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <pre class="code">
+                      <code>
+说明：
+（1）通过检定或校准合格的测量设备，依据检定证书或校准证书，贴绿色"合格"标识；
+（2）对于没有计量特性要求，只作功能性使用，经检查功能正常的设备，贴黄色"准用"
+标识；
+（3）对已出现故障、未经检定或校准、或经检定和校准不合格或超过检定周期的测量设
+备，贴红色"禁用"标识。
+                      </code>
+                    </pre>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-29">规格精度</label>
+                    </div>
+                    <div class="col-2">
+                      <select class="form-select" name="accuracyItem">
+                        <option value="量程">量程</option>
+                        <option value="频率范围">频率范围</option>
+                        <option value="最小刻度">最小刻度</option>
+                        <option value="最大误差">最大误差</option>
+                        <option value="">无</option>
+                      </select>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                    <div class="col-4">
+                      <input class="form-input" id="input-example-29" placeholder="请根据选择合理输入 示例：0.2 -1v/m" name="accuracyRange" required="required">
+                    </div>
+                  </div>
+                  <div id="plus2">
+                  </div>
+                  <div class="form-group">
+                  </div>
+                  <div class="form-group">
+                    <div class="col-6">
+                    </div>
+                    <div class="col-2">
+                      <button type="button" class="btn btn-primary btn-action btn-lg" onclick="add2();"><i class="icon icon-plus"></i></button>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-3">
+                      <label class="form-label" for="input-example-21">验收日期</label>
+                    </div>
+                    <div class="col-9">
+                      <input class="form-input" id="input-example-21" type="date" name="date" readonly="readonly">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-4">
+                    </div>
+                    <div class="col-4">
+                      <button class="btn btn-primary input-group-btn" type="submit" style="display:block;margin:0 auto">提交</button>
+                    </div>
+                    <div class="col-4">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html> 

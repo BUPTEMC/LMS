@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style_login.css">
+    <title>EMC评审系统</title>
+    <style type="text/css" rel="stylesheet">
+        .wrap{margin:0 auto;width:700px;} 
+    </style>
+  </head>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.5.0/js/md5.js"></script>  
+  <script type="text/javascript" src="/javascripts/checkadminCookie.js"></script>
+  <body onload="checkadminCookie('{{id}}','{{password}}')">
+    <div class="wrap">
+      <h1 align="center">新增用户</h1>    
+        <fieldset>
+          <form action="/users/add" method="post">
+			      <p align="center">姓名：<input type="text" name="name" style="BACKGROUND-COLOR: transparent;"></p>
+  				  <p align="center">
+  				    <label class="my_protocol">
+  					    <input class="input_agreement_protocol" type="checkbox" name="duty" value="实验室主任" />实验室主任			
+  					      <span></span>
+    				  </label>
+    				  <label class="my_protocol">
+  					    <input class="input_agreement_protocol" type="checkbox" name="duty" value="质量负责人" />质量负责人
+  				  	    <span></span>
+    				  </label>
+    				  <label class="my_protocol">
+  		 				 	<input class="input_agreement_protocol" type="checkbox" name="duty" value="审核员" />审核员
+    		 					<span></span>
+      				</label>
+    				</p>
+    				<p align="center">
+    				  <label class="my_protocol">
+		            <input class="input_agreement_protocol" type="checkbox" name="duty" value="测试技术部主管" />测试技术部主管
+						      <span></span>
+    				  </label>
+    				  <label class="my_protocol">
+					      <input class="input_agreement_protocol" type="checkbox" name="duty" value="技术负责人" />技术负责人
+					        <span></span>
+    				  </label>
+    				  <label class="my_protocol">
+	 					    <input class="input_agreement_protocol" type="checkbox" name="duty" value="监督员" />监督员
+	 					      <span></span>
+    				  </label>
+    				</p>		
+    				<p align="center">
+  				    <label class="my_protocol">
+	 					    <input class="input_agreement_protocol" type="checkbox" name="duty" value="综合管理部主管" />综合管理部主管
+	 					      <span></span>
+  				    </label>
+    				  <label class="my_protocol">
+						    <input class="input_agreement_protocol" type="checkbox" name="duty" value="内审员" />内审员
+  						    <span></span>
+    				  </label>
+      				<label class="my_protocol">
+		  					<input class="input_agreement_protocol" type="checkbox" name="duty" value="设备管理员" />设备管理员
+		  					  <span></span>
+      				</label>
+      				<label class="my_protocol">
+		  					<input class="input_agreement_protocol" type="checkbox" name="duty" value="学生" />测试员
+						      <span></span>
+      				</label>	
+    				</p>
+	  	      <div style="text-align:center">
+	            <input type="submit" class="login-button" value="提交">&#12288;&#12288;<a href="/admin"><button type="button" class="signup-button">返回</button></a>
+  		      </div>
+		      </form>
+        </fieldset>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="Generator" content="EditPlus®">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <link rel="stylesheet" type="text/css" href="stylesheets/style_login.css">
+    <title>实验室管理系统</title>
+      <style type="text/css" rel="stylesheet">
+          .wrap{margin:0 auto;width:400px;} 
+      </style>
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.5.0/js/md5.js"></script>
+    <script type="text/javascript" src="/javascripts/setCookie.js"></script>
+  </head>
+  <body>
+      <div class="wrap">
+        <h1 align="center">实验室管理系统</h1>    
+        <fieldset>
+          <form  name="users" action="/users/login" method="post" onsubmit="setCookie()">
+              <p align="center">用户名: <input type="text" name="id" placeholder="请输入用户名"></p>
+              <p align="center">密&#12288;码: <input type="password" name="password" placeholder="请输入密码"></p>
+              <div style="text-align:center">  
+                <input type="submit" class="login-button" value="登录">             
+	            </div>
+          </form>
+        </fieldset>
+      </div>
+  </body>
+</html>

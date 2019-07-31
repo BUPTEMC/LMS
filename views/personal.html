@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style_login.css">
+    <title>EMC评审系统</title>
+      <style type="text/css" rel="stylesheet">
+          .wrap{margin:0 auto;width:500px;} 
+      </style>
+  </head>
+  <script type="text/javascript" src="../javascripts/checkuserCookie.js"></script>
+  <body onload="checkuserCookie({{id}},'{{password}}','{{name}}')">
+    <div class="wrap">
+      <h1 align="center">修改密码</h1>    
+        <fieldset>
+          <form action="/users/change?id={{id}}&password={{password}}&name={{name}}" method="post">
+            <p align="center">原&#8194;密&#8194;码：<input type="text" name="password0" style="BACKGROUND-COLOR: transparent;"></p>
+            <p align="center">新&#8194;密&#8194;码：<input type="text" name="password1" style="BACKGROUND-COLOR: transparent;"></p>
+            <p align="center">重复密码：<input type="text" name="password2" style="BACKGROUND-COLOR: transparent;"></p>
+            <div style="text-align:center">
+              <input type="submit" class="login-button" value="提交">&#12288;&#12288;<a href="/homePage?id={{id}}&password={{password}}&name={{name}}"><button type="button" class="signup-button">返回</button></a>
+            </div>
+          </form>
+        </fieldset>
+    </div>
+  </body>
+</html>

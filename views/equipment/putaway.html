@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="../stylesheets/spectre.css">
+  <link rel="stylesheet" href="../stylesheets/spectre.min.css">
+  <link rel="stylesheet" href="../stylesheets/spectre-icons.min.css">
+  <link rel="stylesheet" href="../stylesheets/spectre-exp.min.css">
+  <link rel="stylesheet" href="../stylesheets/docs.min.css">
+  <title>实验室管理系统</title>
+    <style type="text/css" rel="stylesheet">
+      .wrap{margin:0 auto;width:700px;} 
+    </style>
+  </head>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.5.0/js/md5.js"></script>
+  <script type="text/javascript" src="/javascripts/equipment/checkPutaway.js"></script>
+  <body onload="checkuserCookie({{id}},'{{password}}','{{name}}',{{opinion}},0)">
+    <div class="docs-container off-canvas off-canvas-sidebar-show">
+      <div class="docs-navbar"><a class="off-canvas-toggle btn btn-link btn-action" href="#sidebar"><i class="icon icon-menu"></i></a>
+        <ul class="tab">
+            <li class="tab-item"><a href="/homePage?id={{id}}&password={{password}}&name={{name}}">首页</a></li>
+            <li class="tab-item"><a href="/homePage/personal?id={{id}}&password={{password}}&name={{name}}" id="demo">{{name}}</a></li>
+            <li class="tab-item"><a href="/">退出</a></li>
+        </ul>
+      </div>
+      <div class="docs-sidebar off-canvas-sidebar" id="sidebar">
+        <div class="docs-brand">
+          <h3>实验室管理系统</h3>
+        </div>
+        <div class="docs-nav">
+          <div class="accordion-container">
+            <div class="accordion">
+              <input id="accordion-getting-started" type="checkbox" name="docs-accordion-checkbox" hidden=""/>
+              <label class="accordion-header c-hand" for="accordion-getting-started">事件</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="">标准查新</a>
+                  </li>
+                  <li class="menu-item"><a href="">内审</a>
+                  </li>
+                  <li class="menu-item"><a href="">管理评审</a>
+                  </li>
+                  <li class="menu-item"><a href="">人员培训</a>
+                  </li>
+                  <li class="menu-item"><a href="">能力验证</a>
+                  </li>
+                  <li class="menu-item"><a href="">期间核查</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/testProject?id={{id}}&password={{password}}&name={{name}}">测试项目</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/securityCheck?id={{id}}&password={{password}}&name={{name}}">安全检查</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/contract?id={{id}}&password={{password}}&name={{name}}">合同管理</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion">
+              <input id="equipment" type="checkbox" name="docs-accordion-checkbox" hidden="" checked="checked"/>
+              <label class="accordion-header c-hand" for="equipment">仪器设备</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="">设备详情</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/list?id={{id}}&password={{password}}&name={{name}}"><strong>新设备入库</strong></a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/repair?id={{id}}&password={{password}}&name={{name}}">设备维修</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/maintenance?id={{id}}&password={{password}}&name={{name}}">设备保养</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/use?id={{id}}&password={{password}}&name={{name}}">设备使用登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/inout?id={{id}}&password={{password}}&name={{name}}">设备出入登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/outage?id={{id}}&password={{password}}&name={{name}}">设备停用申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/restoreOutage?id={{id}}&password={{password}}&name={{name}}">设备恢复使用申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/equipmentDisabled?id={{id}}&password={{password}}&name={{name}}">设备报废申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/adjust?id={{id}}&password={{password}}&name={{name}}">设备检定校准</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="off-canvas-content">
+        <div class="docs-content" id="content">
+          <div class="container" id="experimentals">
+            <h3 class="s-title">{{eid}}入库</h3>
+              <div class="docs-demo columns">
+                <ul class="step">
+                  <li class="step-item active" id="step1"><a class="tooltip" data-tooltip="Step 1 Tooltip">step 1</a></li>
+                  <li class="step-item" id="step2"><a class="tooltip" data-tooltip="Step 2 Tooltip">step 2</a></li>
+                  <li class="step-item" id="step3"><a class="tooltip" data-tooltip="Step 3 Tooltip">step 3</a></li>
+                </ul>
+              <div class="column col-9 col-sm-12">
+                <div class="timeline">
+                  <div class="timeline-item" id="timeline-example-1">
+                    <div class="timeline-left" id="accepted_parent"><a class="timeline-icon tooltip" href="#timeline-example-1" data-tooltip="验收未完成或不合格" id="accepted_sub"></a></div>
+                    <div class="timeline-content">
+                      <div class="tile">
+                        <div class="tile-content">
+                          <p class="tile-subtitle">新设备验收</p>
+                          <p class="tile-title">设备验收后登记</p>
+                        </div>
+                        <div class="tile-action">
+                          <a href="/homePage/putaway/check?id={{id}}&password={{password}}&name={{name}}"><button class="btn">验收</button></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="timeline-item" id="timeline-example-2">
+                    <div class="timeline-left" id="registered_parent"><a class="timeline-icon tooltip" href="#timeline-example-2" data-tooltip="登记未完成" id="registered_sub"></a></div>
+                    <div class="timeline-content">
+                      <div class="tile">
+                        <div class="tile-content">
+                          <p class="tile-subtitle">新设备登记</p>
+                          <p class="tile-title">设备登记后入库</p>
+                        </div>
+                        <div class="tile-action" id="register_btn_parent">
+                          <button class="btn disabled" tabindex="-1" id="register_btn">登记</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="timeline-item" id="timeline-example-3">
+                    <div class="timeline-left" id="confirm_parent"><a class="timeline-icon tooltip" href="#timeline-example-3" data-tooltip="验收或登记未完成" id="confirm_sub"></a></div>
+                    <div class="timeline-content">
+                      <div class="tile">
+                        <div class="tile-content">
+                          <p class="tile-subtitle">确认入库</p>
+                        </div>
+                        <div class="tile-action" id="confirm_btn_parent">
+                          <button class="btn disabled" tabindex="-1" id="confirm_btn">确认</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html> 

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="../../stylesheets/spectre.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-icons.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-exp.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-0.5.8/docs/dist/docs.min.css">
+  <link rel="stylesheet" href="../../stylesheets/jquery-ui.css">
+  <title>实验室管理系统</title>
+    <style type="text/css" rel="stylesheet">
+      .wrap{margin:0 auto;width:700px;} 
+    </style>
+  </head>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.5.0/js/md5.js"></script>
+  <script type="text/javascript" src="/javascripts/checkuserCookie.js"></script>
+  <script type="text/javascript" src="/javascripts/testProject/projectApply.js"></script>
+  <script type="text/javascript" src="/javascripts/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="/javascripts/jquery-ui.min.js"></script>
+  <body onload="checkuserCookie({{id}},'{{password}}','{{name}}');change()">
+    <div class="docs-container off-canvas off-canvas-sidebar-show">
+      <div class="docs-navbar"><a class="off-canvas-toggle btn btn-link btn-action" href="#sidebar"><i class="icon icon-menu"></i></a>
+        <ul class="tab">
+            <li class="tab-item"><a href="/homePage?id={{id}}&password={{password}}&name={{name}}">首页</a></li>
+            <li class="tab-item"><a href="/homePage/personal?id={{id}}&password={{password}}&name={{name}}" id="demo">{{name}}</a></li>
+            <li class="tab-item"><a href="/">退出</a></li>
+        </ul>
+      </div>
+      <div class="docs-sidebar off-canvas-sidebar" id="sidebar">
+        <div class="docs-brand">
+          <h3>实验室管理系统</h3>
+        </div>
+        <div class="docs-nav">
+          <div class="accordion-container">
+            <div class="accordion">
+              <input id="accordion-getting-started" type="checkbox" name="docs-accordion-checkbox" hidden="" checked="checked"/>
+              <label class="accordion-header c-hand" for="accordion-getting-started">事件</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="">标准查新</a>
+                  </li>
+                  <li class="menu-item"><a href="">内审</a>
+                  </li>
+                  <li class="menu-item"><a href="">管理评审</a>
+                  </li>
+                  <li class="menu-item"><a href="">人员培训</a>
+                  </li>
+                  <li class="menu-item"><a href="">能力验证</a>
+                  </li>
+                  <li class="menu-item"><a href="">期间核查</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/testProject?id={{id}}&password={{password}}&name={{name}}"><strong>测试项目</strong></a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/securityCheck?id={{id}}&password={{password}}&name={{name}}">安全检查</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/contract?id={{id}}&password={{password}}&name={{name}}">合同管理</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion">
+              <input id="equipment" type="checkbox" name="docs-accordion-checkbox" hidden=""/>
+              <label class="accordion-header c-hand" for="equipment">仪器设备</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="/homePage/list?id={{id}}&password={{password}}&name={{name}}">新设备入库</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/repair?id={{id}}&password={{password}}&name={{name}}">设备维修</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/maintenance?id={{id}}&password={{password}}&name={{name}}">设备保养</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/use?id={{id}}&password={{password}}&name={{name}}">设备使用登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/inout?id={{id}}&password={{password}}&name={{name}}">设备出入登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/outage?id={{id}}&password={{password}}&name={{name}}">设备停用申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/restoreOutage?id={{id}}&password={{password}}&name={{name}}">设备恢复使用申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/equipmentDisabled?id={{id}}&password={{password}}&name={{name}}">设备报废申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/adjust?id={{id}}&password={{password}}&name={{name}}">设备检定校准</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="off-canvas-content">
+        <div class="docs-content" id="content">
+          <div class="container" id="experimentals">
+            <h3 class="s-title">开展新项目申请表</h3>
+              <div class="docs-demo columns">
+                <div class="column col-9 col-sm-12">
+                  <form class="form-horizontal" action="" method="post" onsubmit="return judgelength()">
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">项目名称</label>
+                      </div>
+                      <div class="col-9" id="equipment_select">
+                        <input class="form-input" id="projectName" name="name" required="required" placeholder="{{datas2.name}}" onblur="clearName(this.value)">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">立项依据</label>
+                      </div>
+                      <div class="col-9">
+                        <select class="form-select" name="criterion">
+                          <option value="《辐射环境保护管理导则.电磁辐射监测仪器和方法》">《辐射环境保护管理导则.电磁辐射监测仪器和方法》</option>
+                          <option value="《电磁辐射防护规定》">《电磁辐射防护规定》</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">立项目的</label>
+                      </div>
+                      <div class="col-9" id="equipment_select">
+                        <input class="form-input" name="goal" required="required" placeholder="{{datas2.goal}}">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">市场需求</label>
+                      </div>
+                      <div class="col-9">
+                        <textarea class="form-input" placeholder="{{datas2.demand}}" rows="3" name="demand" required="required"></textarea>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">经济效益</label>
+                      </div>
+                      <div class="col-9">
+                        <textarea class="form-input" placeholder="{{datas2.benefit}}" rows="3" name="benefit" required="required"></textarea>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">项目内容</label>
+                      </div>
+                      <div class="col-9" id="equipment_select">
+                        <input class="form-input" name="content" required="required" placeholder="{{datas2.content}}">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">环境条件</label>
+                      </div>
+                      <div class="col-2">
+                        <select class="form-select" name="condition">
+                          <option value="气候条件">气候条件</option>
+                          <option value="测量高度">测量高度</option>
+                          <option value="测量温度">测量温度</option>
+                          <option value="测量湿度">测量湿度</option>
+                        </select>
+                      </div>
+                      <div class="col-1">
+                      </div>
+                      <div class="col-4">
+                        <textarea class="form-input" placeholder="{{datas2.conditionContent}}" rows="3" name="conditionContent" required="required"></textarea>
+                      </div>
+                      <div class="col-1">
+                      </div>
+                      <div class="col-1">
+                        <button type="button" class="btn btn-primary btn-action" onclick="add2('{{datas2.conditionContent}}');"><i class="icon icon-plus"></i></button>
+                      </div>
+                    </div>
+                    <div id="plus2">
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">技术可行性</label>
+                      </div>
+                      <div class="col-9">
+                        <input class="form-input" name="feasibility" required="required" placeholder="{{datas2.feasibility}}">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">需要投入的资源</label>
+                      </div>
+                      <div class="col-2">
+                        <label class="form-label">已有设备</label>
+                      </div>
+                      <div class="col-7"> 
+                        {{each datas1 as value index}}
+                          <label class="form-checkbox form-inline">
+                            <input type="checkbox" name="ename" value="{{value.id}}"><i class="form-icon"></i> {{value.id}}
+                          </label>
+                        {{/each}}
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-2">
+                        <label class="form-label">内部人员</label>
+                      </div>
+                      <div class="col-7"> 
+                        {{each datas as value index}}
+                          <label class="form-checkbox form-inline">
+                            <input type="checkbox" name="innerMember" value="{{value.userName}}"><i class="form-icon"></i> {{value.userName}}
+                          </label>
+                        {{/each}}
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">是否需要新设备</label>
+                      </div>
+                      <div class="col-6"> 
+                        <select class="form-select" onchange="shownew(this.value)">
+                          <option value="否">否</option>
+                          <option value="是">是</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group" id="plus4">
+                      <div class="col-3">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">新设备</label>
+                      </div>
+                      <div class="col-6"> 
+                        <input class="form-input" name="newEquipment" id="newequipmentName" placeholder="多个设备请用逗号隔开">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">是否需要外部人员</label>
+                      </div>
+                      <div class="col-6"> 
+                        <select class="form-select" onchange="showperson(this.value)">
+                          <option value="否">否</option>
+                          <option value="是">是</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group" id="plus5">
+                      <div class="col-3">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">外部人员</label>
+                      </div>
+                      <div class="col-6"> 
+                        <input class="form-input" name="newPerson" id="newpersonName" placeholder="多个人员请用逗号隔开">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">资金</label>
+                      </div>
+                      <div class="col-6">
+                        <div class="input-group">
+                          <input class="form-input" type="number" placeholder="{{datas2.price}}" name="price" required="required">
+                          <span class="input-group-addon">元</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                      </div>
+                      <div class="col-4">
+                        <button class="btn btn-primary input-group-btn" id="submit-button" type="submit" style="display:block;margin:0 auto">提交给技术负责人</button>
+                      </div>
+                      <div class="col-2">
+                        <button type="button" class="btn" id="back-button">返回</button>
+                      </div>
+                      <div class="col-3">
+                      </div>
+                    </div>
+                    <script>
+                      $('#submit-button').on('onsubmit',function(){
+                          $.ajax({
+                              type : 'POST',
+                              url : '/homePage/testprojectApply?id={{id}}&password={{password}}&name={{name}}',
+                              data : $("form").serialize()
+                          });
+                      });
+                      $('#back-button').on('click',function(){
+                        var gnl = confirm("确定要返回?");
+                        if (gnl == true){
+                          window.location.href="/homePage/testprojectapplyShow?id={{id}}&password={{password}}&name={{name}}";
+                        } else {
+                          return false;
+                        }
+                      });
+                    </script>  
+                  </form>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html> 
