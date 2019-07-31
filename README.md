@@ -1,13 +1,13 @@
 # LMS
-db
+db  
       数据库命令
-model
+model  
       上传文件模块
-public
+public  
       本地保存的各项文件
-routes
+routes  
       后台
-views
+views  
       前端
-app.js
+app.js  
       启动文件
