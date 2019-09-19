@@ -2,6 +2,9 @@
 <html lang="en">
  <head>
   <meta charset="utf-8">
+  <meta http-equiv="Expires" CONTENT="0">
+  <meta http-equiv="Cache-Control" CONTENT="no-cache">
+  <meta http-equiv="Pragma" CONTENT="no-cache">
   <link rel="stylesheet" type="text/css" href="stylesheets/spectre.css">
   <link rel="stylesheet" href="stylesheets/spectre.min.css">
   <link rel="stylesheet" href="stylesheets/spectre-icons.min.css">
@@ -15,6 +18,15 @@
   <script src="https://cdn.bootcss.com/blueimp-md5/2.5.0/js/md5.js"></script>
   <script type="text/javascript" src="/javascripts/checkuserCookie.js"></script>
   <script type="text/javascript" src="/javascripts/jquery-3.3.1.min.js"></script>
+  <script>
+    if(window.name != "bencalie"){
+        location.reload();
+        window.name = "bencalie";
+    }
+    else{
+        window.name = "";
+    }
+  </script>
   <script type="text/javascript">
     var savePerson = new Array();
     var eqid = new Array();
@@ -62,6 +74,8 @@
                   <li class="menu-item"><a href="">能力验证</a>
                   </li>
                   <li class="menu-item"><a href="">期间核查</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/activity?id={{id}}&password={{password}}&name={{name}}">测试活动</a>
                   </li>
                   <li class="menu-item"><a href="/homePage/testProject?id={{id}}&password={{password}}&name={{name}}">测试项目</a>
                   </li>

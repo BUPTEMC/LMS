@@ -50,6 +50,8 @@
                   </li>
                   <li class="menu-item"><a href="">期间核查</a>
                   </li>
+                  <li class="menu-item"><a href="/homePage/activity?id={{id}}&password={{password}}&name={{name}}">测试活动</a>
+                  </li>
                   <li class="menu-item"><a href="/homePage/testProject?id={{id}}&password={{password}}&name={{name}}">测试项目</a>
                   </li>
                   <li class="menu-item"><a href="/homePage/securityCheck?id={{id}}&password={{password}}&name={{name}}">安全检查</a>
@@ -106,24 +108,45 @@
               <a href="/contract/合同模板.doc" download="合同模板"><button type="button" class="btn btn-sm" id="back-button">下载合同模板</button></a>
             </div>
             <div class="docs-demo columns">
-                <div class="column col-12 col-xs-12">
-                  <h4 class="s-title">合同列表</h4>
-                  <table class="table" style="margin:0 auto;" data-pagination="true" data-side-pagination="client" data-page-size="5" id="table_page">
-                    <tbody>
-                        {{each datas as value index}}
-                        <tr>
-                          <td><a href="/homePage/contractDetail?id={{id}}&password={{password}}&name={{name}}&conid={{value.conid}}"><button class="btn btn-link active">{{value.conid}}</button></a></td>
-                          <td>{{value.organization}}</td>
-                          <td>{{value.pname}}</td>
-                          <td>{{value.state}}</td>
-                          <td>
-                            <button type="button" class="btn btn-sm" id="review_button">评审</button>
-                          </td>
-                        </tr>
-                      {{/each}}
-                    </tbody>
-                  </table>
-                </div>
+              <div class="column col-12 col-xs-12">
+                <h4 class="s-title">合同列表</h4>
+                <table class="table" style="margin:0 auto;" data-pagination="true" data-side-pagination="client" data-page-size="5" id="table_page">
+                  <tbody>
+                    {{each datas as value index}}
+                      <tr>
+                        <td><a href="/homePage/contractDetail?id={{id}}&password={{password}}&name={{name}}&conid={{value.conid}}"><button class="btn btn-link active">{{value.conid}}</button></a></td>
+                        <td>{{value.organization}}</td>
+                        <td>{{value.pname}}</td>
+                        <td>{{value.state}}</td>
+                        <td>
+                          <button type="button" class="btn btn-sm" id="{{index}}">评审</button>
+                          <script>
+                            $('#{{index}}').on('click',function(){
+                                $.ajax({
+                                    type : 'POST',
+                                    url : '/homePage/contractreviewCheck?id={{id}}&password={{password}}&name={{name}}&conid={{value.conid}}',
+                                    cache : false,  //不需要缓存
+                                    processData : false,    //不需要进行数据转换
+                                    contentType : false
+                                }).done(function(data){
+                                    console.log(data);
+                                    if (data.errCode == 1) {
+                                      window.location.href="/homePage/contractReview?id={{id}}&password={{password}}&name={{name}}&conid={{value.conid}}";
+                                    }
+                                    else {
+                                      alert(data.errMsg);
+                                    }  
+                                }).fail(function(err){
+                                    console.error(err);
+                                });
+                            });
+                          </script>
+                        </td>
+                      </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

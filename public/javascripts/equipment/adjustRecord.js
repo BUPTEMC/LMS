@@ -84,9 +84,10 @@ function getadjustPlan(id,password,name) {
         for (var i = 0; i < adjustitem.length; i++) {
           name += "<div class='form-group'><div class='col-3'><label class='form-label' for='input-example-11'>不确定度</label></div>";
           name += "<div class='col-3'><input class='form-input' id='aItem' name='adjustItem' readonly='readonly' value='" + adjustitem[i] + "'></div>";
-          name += "<div class='col-1'></div><div class='col-5'><input class='form-input' id='input-example-11' name='uncertainty' required='required'></div></div>";
+          name += "<div class='col-1'></div><div class='col-5'><input class='form-input' id='input-example-11' name='uncertainty' required='required' placeholder='10M-1G为1.0,1G-6G为1.3/1.5'></div></div>";
         }
-        document.getElementById("div-certificate").insertAdjacentHTML("afterEnd",name);
+        $("#plus11").empty();
+        document.getElementById("plus11").insertAdjacentHTML("beforeEnd",name);
       }
     }
   }

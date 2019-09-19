@@ -50,6 +50,8 @@
                   </li>
                   <li class="menu-item"><a href="">期间核查</a>
                   </li>
+                  <li class="menu-item"><a href="/homePage/activity?id={{id}}&password={{password}}&name={{name}}">测试活动</a>
+                  </li>
                   <li class="menu-item"><a href="/homePage/testProject?id={{id}}&password={{password}}&name={{name}}">测试项目</a>
                   </li>
                   <li class="menu-item"><a href="/homePage/securityCheck?id={{id}}&password={{password}}&name={{name}}">安全检查</a>
@@ -108,7 +110,7 @@
                         <label class="form-label">合同名称</label>
                       </div>
                       <div class="col-9">
-                        <input class="form-input" name="conname" placeholder="合同名称" required="required">
+                        <input class="form-input" id="contractName" name="conname" placeholder="合同名称" required="required" onblur="clearName(this.value)">
                       </div>
                     </div>
                     <div class="form-group">

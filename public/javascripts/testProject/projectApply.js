@@ -10,6 +10,15 @@ function add2(conditionContent) {
 	var add = "" +part_0 + part_1 + part_2 + part_3 + part_4;
     document.getElementById("plus2").insertAdjacentHTML("beforeEnd",add);
 }
+function addnewEq() {
+  var part_0 = "<div class='form-group'>"
+  var part_1 = "<div class='col-6'></div>";
+  var part_2 = "<div class='col-4'><input class='form-input' name='newEquipment' id='newequipmentName' placeholder='新设备名称' required='required'></div>";
+  var part_3 = "<div class='col-1'></div>"
+  var part_4 = "<div class='col-1'><button type='button' onclick='minus(this)' class='btn btn-primary btn-action'><i class='icon icon-minus'></i></button></div></div>";
+  var add = "" + part_0 + part_1 + part_2 + part_3 + part_4;
+    document.getElementById("plus7").insertAdjacentHTML("beforeEnd",add);
+}
 function shownew(str) {
 	if (str == "是") {
 		$("#plus4").show();
@@ -20,6 +29,7 @@ function shownew(str) {
     $("#plus4").hide();
     $('#newequipmentName').val("");
     $("#newequipmentName").removeAttr("required");
+    $("#plus7").empty();
   }
 }
 function showperson(str) {

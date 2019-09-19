@@ -50,6 +50,8 @@
                   </li>
                   <li class="menu-item"><a href="">期间核查</a>
                   </li>
+                  <li class="menu-item"><a href="/homePage/activity?id={{id}}&password={{password}}&name={{name}}">测试活动</a>
+                  </li>
                   <li class="menu-item"><a href="/homePage/testProject?id={{id}}&password={{password}}&name={{name}}"><strong>测试项目</strong></a>
                   </li>
                   <li class="menu-item"><a href="/homePage/securityCheck?id={{id}}&password={{password}}&name={{name}}">安全检查</a>
@@ -173,6 +175,11 @@
                     </div>
                     <div class="form-group">
                       <div class="col-3">
+                        <label class="form-label"></label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
                         <label class="form-label">技术可行性</label>
                       </div>
                       <div class="col-9">
@@ -230,9 +237,18 @@
                       <div class="col-3">
                         <label class="form-label">新设备</label>
                       </div>
-                      <div class="col-6"> 
-                        <input class="form-input" name="newEquipment" id="newequipmentName" placeholder="多个设备请用逗号隔开">
+                      <div class="col-4"> 
+                        <input class="form-input" name="newEquipment" id="newequipmentName" placeholder="新设备名称">
                       </div>
+                      <div class="col-1">
+                      </div>
+                      <div class="col-1">
+                        <button type="button" class="btn btn-primary btn-action" onclick="addnewEq();"><i class="icon icon-plus"></i></button>
+                      </div>
+                    </div>
+                    <div id="plus7">
+                    </div>
+                    <div class="form-group">
                     </div>
                     <div class="form-group">
                       <div class="col-3">

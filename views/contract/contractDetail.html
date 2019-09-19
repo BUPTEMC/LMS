@@ -75,6 +75,8 @@
                   </li>
                   <li class="menu-item"><a href="">期间核查</a>
                   </li>
+                  <li class="menu-item"><a href="/homePage/activity?id={{id}}&password={{password}}&name={{name}}">测试活动</a>
+                  </li>
                   <li class="menu-item"><a href="/homePage/testProject?id={{id}}&password={{password}}&name={{name}}">测试项目</a>
                   </li>
                   <li class="menu-item"><a href="/homePage/securityCheck?id={{id}}&password={{password}}&name={{name}}">安全检查</a>
@@ -131,15 +133,45 @@
                     <tr>
                       <td>合同编号</td>
                       <td>{{datas.conid}}</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>正式合同编号</td>
+                      <td>{{datas.conrealid}}</td>
                       <td>
-                        <button type="button" class="btn btn-sm" id="ban_button">重新申请</button>
+                        <button type="button" class="btn btn-sm" id="confirmreal">点击输入</button>
+                        <script>
+                          $('#confirmreal').on('click',function(){
+                            var pmt = prompt("请输入正式合同编号");
+                            pmt = pmt.replace(/\s/g,"");
+                            if(pmt.length == 0) {
+                              alert("请输入有效字符");
+                            }
+                            else {
+                              var page = '/homePage/confirmconrealid?conid={{datas.conid}}&conrealid=' + pmt;
+                              $.ajax({
+                                  type : 'POST',
+                                  url : page,
+                                  cache : false,  //不需要缓存
+                                  processData : false,    //不需要进行数据转换
+                                  contentType : false
+                              }).done(function(data){
+                                  console.log(data);
+                                  if (data.errCode == 1) {
+                                    location.reload();
+                                    alert(data.errMsg);
+                                  }
+                                  else {
+                                    alert(data.errMsg);
+                                  }  
+                              }).fail(function(err){
+                                  console.error(err);
+                              });
+                            }                           
+                          });
+                        </script> 
                       </td>
                     </tr>
-                    <script>
-                      $('#ban_button').on('click',function(){
-                        window.location.href="";
-                      });
-                    </script>
                     <tr>
                       <td>合同名称</td>
                       <td>{{datas.conname}}</td>
@@ -245,13 +277,170 @@
                     </script>
                     <tr>
                       <td>分包情况</td>
-                      <td><a href="">分包详情</a></td>
+                      <td><a href="/homePage/contractorDetail?id={{id}}&password={{password}}&name={{name}}&conid={{datas.conid}}">分包详情</a></td>
                       <td>
-                        <button type="button" class="btn btn-sm" id="ban_button">分包管理</button>
+                        <button type="button" class="btn btn-sm" id="contractorReview_button">分包方评审</button>
+                        <button type="button" class="btn btn-sm" id="addContractor_button">添加合格的分包方</button>
+                      </td>
+                    </tr>
+                    <script>
+                      $('#contractorReview_button').on('click',function(){
+                        window.location.href= "/homePage/contractorReview?id={{id}}&password={{password}}&name={{name}}&conid={{datas.conid}}&pname={{datas.pname}}";
+                      });
+                      $('#addContractor_button').on('click',function(){
+                        window.location.href= "/homePage/addContractor?id={{id}}&password={{password}}&name={{name}}&conid={{datas.conid}}";
+                      });
+                    </script>
+                    <tr>
+                      <td>分包协议</td>
+                      <td id="result"><a href="{{datas.contractorResultUrl}}" download="分包协议">下载分包协议</td>
+                      <td>
+                        <input class="form-input" id="input-example-10" type="file" name="credit" accept="application/pdf" onchange="fileUpload()" style="display:none">
+                        <button type="button" class="btn btn-sm" id="contractorResult_button">上传分包协议</button>
+                      </td>
+                    </tr>
+                    <script>
+                      $('#contractorResult_button').on('click',function(){
+                          $("#input-example-10").trigger("click");
+                      });
+                      function fileUpload() {
+                        var myPhoto = $('#input-example-10')[0].files[0];
+                        var oMyForm = new FormData();
+                        oMyForm.append("name", 'crazyJiaLin');
+                        oMyForm.append("userfile", myPhoto);
+                        $.ajax({
+                            type : 'POST',
+                            url : '/homePage/contractorResultUpload?conid={{datas.conid}}',
+                            cache : false,  //不需要缓存
+                            processData : false,    //不需要进行数据转换
+                            contentType : false, //默认数据传输方式是application,改为false，编程multipart
+                            data : oMyForm,
+                            dataType : 'json'
+                        }).done(function(data){
+                            console.log(data);
+                            alert(data.errMsg);
+                            location.reload(); 
+                        }).fail(function(err){
+                            console.error(err);
+                        });
+                      }
+                    </script>
+                    <script>
+                      if ("{{datas.contractorResultUrl}}" == "") {
+                        $("#result").empty();
+                      }
+                    </script>
+                    <tr>
+                      <td>合同文件</td>
+                      <td id="downloadcontract"><a href="{{datas.contractUrl}}" download="{{datas.conname}}">下载合同</td>
+                      <td>
+                        <input class="form-input" id="input-example-11" type="file" name="contractUrl" accept="application/pdf" onchange="contractUpload()" style="display:none">
+                        <button type="button" class="btn btn-sm" id="contractUpload_button">上传合同</button>
+                      </td>
+                    </tr>
+                    <script>
+                      $('#contractUpload_button').on('click',function(){
+                          $("#input-example-11").trigger("click");
+                      });
+                      function contractUpload() {
+                        var myPhoto = $('#input-example-11')[0].files[0];
+                        var oMyForm = new FormData();
+                        oMyForm.append("name", 'crazyJiaLin');
+                        oMyForm.append("userfile", myPhoto);
+                        $.ajax({
+                            type : 'POST',
+                            url : '/homePage/contractUpload?conid={{datas.conid}}',
+                            cache : false,  //不需要缓存
+                            processData : false,    //不需要进行数据转换
+                            contentType : false, //默认数据传输方式是application,改为false，编程multipart
+                            data : oMyForm,
+                            dataType : 'json'
+                        }).done(function(data){
+                            console.log(data);
+                            alert(data.errMsg);
+                            location.reload(); 
+                        }).fail(function(err){
+                            console.error(err);
+                        });
+                      }
+                    </script>
+                    <script>
+                      if ("{{datas.contractUrl}}" == "") {
+                        $("#downloadcontract").empty();
+                      }
+                    </script>
+                    <tr>
+                      <td>汇款情况</td>
+                      <td><a href="/homePage/accountDetail?id={{id}}&password={{password}}&name={{name}}&conid={{datas.conid}}&conname={{datas.conname}}">汇款详情</a></td>
+                      <td>
+                        <button type="button" class="btn btn-sm" id="account_button">到账登记</button>
+                      </td>
+                    </tr>
+                    <script>
+                      $('#account_button').on('click',function(){
+                          $.ajax({
+                            type : 'POST',
+                            url : '/homePage/synleaderCheck?id={{id}}&password={{password}}&name={{name}}',
+                            cache : false,  //不需要缓存
+                            processData : false,    //不需要进行数据转换
+                            contentType : false
+                          }).done(function(data){
+                            console.log(data);
+                            if (data.errCode == 1) {
+                              window.location.href="/homePage/accountRecord?id={{id}}&password={{password}}&name={{name}}&conid={{datas.conid}}&conname={{datas.conname}}&remitter={{datas.organization}}";
+                            }
+                            else {
+                              alert(data.errMsg);
+                            }  
+                          }).fail(function(err){
+                              console.error(err);
+                          });
+                      });
+                    </script>
+                    <script>
+                      if ("{{datas.contractUrl}}" == "") {
+                        $("#downloadcontract").empty();
+                      }
+                    </script>
+                    <tr>
+                      <td>合同作废</td>
+                      <td>{{datas.cancelReason}}</td>
+                      <td>
+                        <button type="button" class="btn btn-sm" id="cancel">作废</button>
+                        <script>
+                          $('#cancel').on('click',function(){
+                            var pmt = prompt("请输入作废原因");
+                            pmt = pmt.replace(/\s/g,"");
+                            if(pmt.length == 0) {
+                              alert("请输入有效字符");
+                            }
+                            else {
+                              var page = '/homePage/contractCancel?conid={{datas.conid}}&cancelReason=' + pmt;
+                              $.ajax({
+                                  type : 'POST',
+                                  url : page,
+                                  cache : false,  //不需要缓存
+                                  processData : false,    //不需要进行数据转换
+                                  contentType : false
+                              }).done(function(data){
+                                  console.log(data);
+                                  if (data.errCode == 1) {
+                                    location.reload();
+                                    alert(data.errMsg);
+                                  }
+                                  else {
+                                    alert(data.errMsg);
+                                  }  
+                              }).fail(function(err){
+                                  console.error(err);
+                              });
+                            }                           
+                          });
+                        </script> 
                       </td>
                     </tr>
                     <tr>
-                      <td><a href="">合同评审记录</a></td>
+                      <td><a href="/homePage/contractreviewShow?id={{id}}&password={{password}}&name={{name}}&conid={{datas.conid}}">合同评审记录</a></td>
                       <td></td>
                       <td></td>
                     </tr>

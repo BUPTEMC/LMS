@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="../../stylesheets/spectre.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-icons.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-exp.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-0.5.8/docs/dist/docs.min.css">
+  <title>实验室管理系统</title>
+    <style type="text/css" rel="stylesheet">
+      .wrap{margin:0 auto;width:700px;} 
+    </style>
+  </head>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.5.0/js/md5.js"></script>
+  <script type="text/javascript" src="/javascripts/checkuserCookie.js"></script>
+  <script type="text/javascript" src="/javascripts/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript">
+    function judgelength() {
+      var gnl = confirm("确定要提交?");
+      if (gnl == true){
+        return true;
+      } else {
+        return false;
+      }
+    }
+  </script>
+  <body onload="checkuserCookie({{id}},'{{password}}','{{name}}')">
+    <div class="docs-container off-canvas off-canvas-sidebar-show">
+      <div class="docs-navbar"><a class="off-canvas-toggle btn btn-link btn-action" href="#sidebar"><i class="icon icon-menu"></i></a>
+        <ul class="tab">
+            <li class="tab-item"><a href="/homePage?id={{id}}&password={{password}}&name={{name}}">首页</a></li>
+            <li class="tab-item"><a href="/homePage/personal?id={{id}}&password={{password}}&name={{name}}" id="demo">{{name}}</a></li>
+            <li class="tab-item"><a href="/">退出</a></li>
+        </ul>
+      </div>
+      <div class="docs-sidebar off-canvas-sidebar" id="sidebar">
+        <div class="docs-brand">
+          <h3>实验室管理系统</h3>
+        </div>
+        <div class="docs-nav">
+          <div class="accordion-container">
+            <div class="accordion">
+              <input id="accordion-getting-started" type="checkbox" name="docs-accordion-checkbox" hidden="" checked="checked"/>
+              <label class="accordion-header c-hand" for="accordion-getting-started">事件</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="">标准查新</a>
+                  </li>
+                  <li class="menu-item"><a href="">内审</a>
+                  </li>
+                  <li class="menu-item"><a href="">管理评审</a>
+                  </li>
+                  <li class="menu-item"><a href="">人员培训</a>
+                  </li>
+                  <li class="menu-item"><a href="">能力验证</a>
+                  </li>
+                  <li class="menu-item"><a href="">期间核查</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/activity?id={{id}}&password={{password}}&name={{name}}"><strong>测试活动</strong></a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/testProject?id={{id}}&password={{password}}&name={{name}}">测试项目</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/securityCheck?id={{id}}&password={{password}}&name={{name}}">安全检查</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/contract?id={{id}}&password={{password}}&name={{name}}">合同管理</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion">
+              <input id="equipment" type="checkbox" name="docs-accordion-checkbox" hidden=""/>
+              <label class="accordion-header c-hand" for="equipment">仪器设备</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="/homePage/list?id={{id}}&password={{password}}&name={{name}}">新设备入库</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/repair?id={{id}}&password={{password}}&name={{name}}">设备维修</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/maintenance?id={{id}}&password={{password}}&name={{name}}">设备保养</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/use?id={{id}}&password={{password}}&name={{name}}">设备使用登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/inout?id={{id}}&password={{password}}&name={{name}}">设备出入登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/outage?id={{id}}&password={{password}}&name={{name}}">设备停用申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/restoreOutage?id={{id}}&password={{password}}&name={{name}}">设备恢复使用申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/equipmentDisabled?id={{id}}&password={{password}}&name={{name}}">设备报废申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/adjust?id={{id}}&password={{password}}&name={{name}}">设备检定校准</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="off-canvas-content">
+        <div class="docs-content" id="content">
+          <div class="container" id="experimentals">
+            <h3 class="s-title">抽样计划</h3>
+              <div class="docs-demo columns">
+                <div class="column col-9 col-sm-12">
+                  <form class="form-horizontal" action="" method="post" onsubmit="return judgelength()">
+                    <div class="form-group">
+                      <div class="col-4">
+                        <label class="form-label">活动编号</label>
+                      </div>
+                      <div class="col-8">
+                        <label class="form-label">{{datas.acid}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-4">
+                        <label class="form-label">活动名称</label>
+                      </div>
+                      <div class="col-8">
+                        <label class="form-label">{{datas.acname}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-4">
+                        <label class="form-label">委托方名称</label>
+                      </div>
+                      <div class="col-8">
+                        <label class="form-label">{{datas.organization}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-4">
+                        <label class="form-label">项目名称</label>
+                      </div>
+                      <div class="col-8">
+                        <label class="form-label">{{datas.pname}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-4">
+                        <label class="form-label">抽样方法</label>
+                      </div>
+                      <div class="col-8">
+                        <label class="form-label">{{datas.sampleMethod}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-4">
+                        <label class="form-label">抽样样品</label>
+                      </div>
+                      <div class="col-8">
+                        <label class="form-label">{{datas.sampleType}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-4">
+                        <label class="form-label">是否涵盖所有敏感点</label>
+                      </div>
+                      <div class="col-8">
+                        <label class="form-label">{{datas.sensitivePot}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-4">
+                        <label class="form-label">监督人员</label>
+                      </div>
+                      <div class="col-8">
+                        <label class="form-label">{{datas.superviseMember}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-4">
+                        <label class="form-label">抽样地点图示</label>
+                      </div>
+                      <div class="col-8">
+                        <a href="{{datas.sampleaddressUrl}}" download="抽样地点图示"><button type="button" class="btn btn-sm">下载图示</button></a>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                      </div>
+                      <div class="col-4">
+                        <button type="button" class="btn" id="back-button">返回</button>
+                      </div>
+                    </div>
+                    <script>
+                      $('#back-button').on('click',function(){
+                        var gnl = confirm("确定要返回?");
+                        if (gnl == true){
+                          javascript:history.go(-1);
+                        } else {
+                          return false;
+                        }
+                      });
+                    </script>   
+                  </form>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html> 
