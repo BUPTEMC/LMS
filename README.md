@@ -23,8 +23,11 @@ app.js|程序启动入口
 
 #### mysql配置
 1. 安装mysql
+
 2. 右键我的电脑 -> 高级系统设置 -> 环境变量 -> 系统变量 -> 添加*D:\mysql-5.7.23-win32\bin;*(即mysql的bin目录)
+
 3. 在mysql根目录下新建文件夹*data*
+
 4. 如果mysql根目录下有*my-default.ini*，重命名为*my.ini*，并将文件内容修改为如下:
 ```
 
@@ -61,16 +64,22 @@ app.js|程序启动入口
 	default-storage-engine=INNODB
 ```
   **注意:将*basedir*和*datadir*改为本机mysql路径**
+
 5. 以**管理员身份**启动命令行或PS，切换到*mysql\bin*目录下，输入`mysqld -install`，成功会出现下图:
 ![](https://images2017.cnblogs.com/blog/1013082/201711/1013082-20171129200703745-1678069599.png)
+
 6. 输入`net start mysql`启动mysql，也可在windows服务中启动mysql，输入`net stop mysql`关闭mysql
 ![](https://images2017.cnblogs.com/blog/1013082/201711/1013082-20171129201043401-962847995.png)
+
 7. 完成mysql配置
  
 #### 设置mysql密码
 1. 启动命令行或PS，切换到*mysql\bin*目录下输入`net start mysql`启动mysql
+
 2. 输入`mysql -uroot -p`登陆mysql，第一次登陆密码为空，直接回车
+
 3. 输入`set password for root@localhost=password('123456');`将密码设为*123456*
+
 4. 完成mysql密码设置
 
 ### nodejs
@@ -81,14 +90,21 @@ app.js|程序启动入口
 
 #### nodejs配置
 1. 启动命令行或PS，切换到*MysqlDemo*目录下输入`npm body-parser`，等待安装完成
+
 2. 输入`npm ejs`，等待安装完成
+
 3. 输入`npm silly-datetime`，等待安装完成
+
 4. 输入`npm dateformat`，等待安装完成
+
 5. 输入`npm formidable`，等待安装完成
+
 6. 完成nodejs配置
 
 ### 启动流程
 ---
 1. 启动命令行或PS，切换到*mysql\bin*目录下输入`net start mysql`启动mysql
+
 2. 再开启一个命令行或PS，切换到*MysqlDemo*目录下输入`npm start`
+
 3. 在浏览器中输入`localhost:3000`或`本机ipv4地址:3000`即可访问系统主页，开始使用
