@@ -31,7 +31,7 @@ app.js|程序启动入口
 4. 如果mysql根目录下有*my-default.ini*，重命名为*my.ini*，并将文件内容修改为如下:
 ```
 
-    [mysql]
+    	[mysql]
 
 	# 设置mysql客户端默认字符集
 
