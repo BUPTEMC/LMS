@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="../../stylesheets/spectre.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-icons.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-exp.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-0.5.8/docs/dist/docs.min.css">
+  <link rel="stylesheet" href="../../stylesheets/jquery-ui.css">
+  <title>实验室管理系统</title>
+  </head>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.5.0/js/md5.js"></script>
+  <script type="text/javascript" src="/javascripts/checkuserCookie.js"></script>
+  <script type="text/javascript" src="/javascripts/activity/qualitysupervisionRecord.js"></script>
+  <script type="text/javascript" src="/javascripts/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="/javascripts/jquery-ui.min.js"></script>
+  <body onload="checkuserCookie({{id}},'{{password}}','{{name}}')">
+    <div class="docs-container off-canvas off-canvas-sidebar-show">
+      <div class="docs-navbar"><a class="off-canvas-toggle btn btn-link btn-action" href="#sidebar"><i class="icon icon-menu"></i></a>
+        <ul class="tab">
+            <li class="tab-item"><a href="/homePage?id={{id}}&password={{password}}&name={{name}}">首页</a></li>
+            <li class="tab-item"><a href="/homePage/personal?id={{id}}&password={{password}}&name={{name}}" id="demo">{{name}}</a></li>
+            <li class="tab-item"><a href="/">退出</a></li>
+        </ul>
+      </div>
+      <div class="docs-sidebar off-canvas-sidebar" id="sidebar">
+        <div class="docs-brand">
+          <h3>实验室管理系统</h3>
+        </div>
+        <div class="docs-nav">
+          <div class="accordion-container">
+            <div class="accordion">
+              <input id="member" type="checkbox" name="docs-accordion-checkbox" hidden=""/>
+              <label class="accordion-header c-hand" for="member">人员</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="/homePage/memberList?id={{id}}&password={{password}}&name={{name}}">人员一览表</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/memberProfile?id={{id}}&password={{password}}&name={{name}}">人员档案登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/memberPost?id={{id}}&password={{password}}&name={{name}}">检测人员上岗审批</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/regularMeeting?id={{id}}&password={{password}}&name={{name}}">例会登记</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion">
+              <input id="accordion-getting-started" type="checkbox" name="docs-accordion-checkbox" hidden="" checked="checked"/>
+              <label class="accordion-header c-hand" for="accordion-getting-started">事件</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="">标准查新</a>
+                  </li>
+                  <li class="menu-item"><a href="">内审</a>
+                  </li>
+                  <li class="menu-item"><a href="">管理评审</a>
+                  </li>
+                  <li class="menu-item"><a href="/train?id={{id}}&password={{password}}&name={{name}}">人员培训</a>
+                  </li>
+                  <li class="menu-item"><a href="">能力验证</a>
+                  </li>
+                  <li class="menu-item"><a href="">期间核查</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/activity?id={{id}}&password={{password}}&name={{name}}"><strong>测试活动</strong></a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/testProject?id={{id}}&password={{password}}&name={{name}}">测试项目</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/securityCheck?id={{id}}&password={{password}}&name={{name}}">安全检查</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/contract?id={{id}}&password={{password}}&name={{name}}">合同管理</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion">
+              <input id="equipment" type="checkbox" name="docs-accordion-checkbox" hidden=""/>
+              <label class="accordion-header c-hand" for="equipment">仪器设备</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="/homePage/list?id={{id}}&password={{password}}&name={{name}}">新设备入库</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/repair?id={{id}}&password={{password}}&name={{name}}">设备维修</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/maintenance?id={{id}}&password={{password}}&name={{name}}">设备保养</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/use?id={{id}}&password={{password}}&name={{name}}">设备使用登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/inout?id={{id}}&password={{password}}&name={{name}}">设备出入登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/outage?id={{id}}&password={{password}}&name={{name}}">设备停用申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/restoreOutage?id={{id}}&password={{password}}&name={{name}}">设备恢复使用申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/equipmentDisabled?id={{id}}&password={{password}}&name={{name}}">设备报废申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/adjust?id={{id}}&password={{password}}&name={{name}}">设备检定校准</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="off-canvas-content">
+        <div class="docs-content" id="content">
+          <div class="container" id="experimentals">
+            <h3 class="s-title">测试活动质量监督记录表</h3>
+              <div class="docs-demo columns">
+                <div class="column col-9 col-sm-12">
+                  <form class="form-horizontal" action="" method="post" onsubmit="return judgelength()">
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">监督日期</label>
+                      </div>
+                      <div class="col-9">
+                        <input class="form-input" type="date" name="date" required="required">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">监督员</label>
+                      </div>
+                      <div class="col-9">
+                        {{each people as value index}}
+                          <label class="form-checkbox form-inline">
+                            <input type="checkbox" name="superviseMan" value="{{value.userName}}"><i class="form-icon"></i> {{value.userName}}
+                          </label>
+                        {{/each}}
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">监督地点</label>
+                      </div>
+                      <div class="col-9">
+                        <label class="form-label">
+                          {{datas.testPosition}}
+                          <input class="form-input" name="address" required="required" value="{{datas.testPosition}}" style="display:none">
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">现场原始记录名称</label>
+                      </div>
+                      <div class="col-9">
+                        <label class="form-label">
+                          <a href="/homePage/activityDetail?id={{id}}&password={{password}}&name={{name}}&acid={{datas.acid}}">{{datas.originname}}</a>
+                          <input class="form-input" name="originname" required="required" value="{{datas.originname}}" style="display:none">
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">监督对象</label>
+                      </div>
+                      <div class="col-9">
+                        <label class="form-label">
+                          {{datas.measureMan}}
+                          <input class="form-input" name="object" required="required" value="{{datas.measureMan}}" style="display:none">
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">监督工作实施依据</label>
+                      </div>
+                      <div class="col-9">
+                        <select class="form-select" name="standard">
+                          <option value="国家有关标准">国家有关标准</option>
+                          <option value="管理体系文件">管理体系文件</option>
+                          <option value="技术规程、规范">技术规程、规范</option>
+                          <option value="与客户的协议规定">与客户的协议规定</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">监督内容及记录</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-1">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label">测量设备选择的正确性</label>
+                      </div>
+                      <div class="col-1">
+                      </div>
+                      <div class="col-4">
+                        <label class="form-radio form-inline">
+                          <input type="radio" name="c1" onchange = "change1(this.value)" checked="" value="合格"><i class="form-icon"></i> 合格
+                        </label>
+                        <label class="form-radio form-inline">
+                          <input type="radio" name="c1" onchange = "change1(this.value)" value="不合格"><i class="form-icon"></i> 不合格
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group" id="1_reason" style="display: none">
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">简要描述</label>
+                      </div>
+                      <div class="col-7">
+                        <input class="form-input" id="1_content" name="content1" placeholder="请对不合格的情况进行简要描述">
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">纠正过程记录</label>
+                      </div>
+                      <div class="col-7">
+                        <textarea class="form-input" placeholder="" rows="2" id="1_correctRecord"  name="correctRecord1"></textarea>
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">纠正结果</label>
+                      </div>
+                      <div class="col-7">
+                        <select class="form-select" name="correctResult1">
+                          <option value="问题已及时纠正">问题已及时纠正</option>
+                          <option value="仍有暂时无法纠正的问题，已限期整改">仍有暂时无法纠正的问题，已限期整改</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-1">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label">测试环境的符合性</label>
+                      </div>
+                      <div class="col-1">
+                      </div>
+                      <div class="col-4">
+                        <label class="form-radio form-inline">
+                          <input type="radio" name="c2" onchange = "change2(this.value)" checked="" value="合格"><i class="form-icon"></i> 合格
+                        </label>
+                        <label class="form-radio form-inline">
+                          <input type="radio" name="c2" onchange = "change2(this.value)" value="不合格"><i class="form-icon"></i> 不合格
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group" id="2_reason" style="display: none">
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">简要描述</label>
+                      </div>
+                      <div class="col-7">
+                        <input class="form-input" id="2_content" name="content2" placeholder="请对不合格的情况进行简要描述">
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">纠正过程记录</label>
+                      </div>
+                      <div class="col-7">
+                        <textarea class="form-input" placeholder="" rows="2" id="2_correctRecord"  name="correctRecord2"></textarea>
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">纠正结果</label>
+                      </div>
+                      <div class="col-7">
+                        <select class="form-select" name="correctResult2">
+                          <option value="问题已及时纠正">问题已及时纠正</option>
+                          <option value="仍有暂时无法纠正的问题，已限期整改">仍有暂时无法纠正的问题，已限期整改</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-1">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label">测试方法选用的合理性</label>
+                      </div>
+                      <div class="col-1">
+                      </div>
+                      <div class="col-4">
+                        <label class="form-radio form-inline">
+                          <input type="radio" name="c3" onchange = "change3(this.value)" checked="" value="合格"><i class="form-icon"></i> 合格
+                        </label>
+                        <label class="form-radio form-inline">
+                          <input type="radio" name="c3" onchange = "change3(this.value)" value="不合格"><i class="form-icon"></i> 不合格
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group" id="3_reason" style="display: none">
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">简要描述</label>
+                      </div>
+                      <div class="col-7">
+                        <input class="form-input" id="3_content" name="content3" placeholder="请对不合格的情况进行简要描述">
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">纠正过程记录</label>
+                      </div>
+                      <div class="col-7">
+                        <textarea class="form-input" placeholder="" rows="2" id="3_correctRecord"  name="correctRecord3"></textarea>
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">纠正结果</label>
+                      </div>
+                      <div class="col-7">
+                        <select class="form-select" name="correctResult3">
+                          <option value="问题已及时纠正">问题已及时纠正</option>
+                          <option value="仍有暂时无法纠正的问题，已限期整改">仍有暂时无法纠正的问题，已限期整改</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-1">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label">现场原始记录的规范性</label>
+                      </div>
+                      <div class="col-1">
+                      </div>
+                      <div class="col-4">
+                        <label class="form-radio form-inline">
+                          <input type="radio" name="c4" onchange = "change4(this.value)" checked="" value="合格"><i class="form-icon"></i> 合格
+                        </label>
+                        <label class="form-radio form-inline">
+                          <input type="radio" name="c4" onchange = "change4(this.value)" value="不合格"><i class="form-icon"></i> 不合格
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group" id="4_reason" style="display: none">
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">简要描述</label>
+                      </div>
+                      <div class="col-7">
+                        <input class="form-input" id="4_content" name="content4" placeholder="请对不合格的情况进行简要描述">
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">纠正过程记录</label>
+                      </div>
+                      <div class="col-7">
+                        <textarea class="form-input" placeholder="" rows="2" id="4_correctRecord"  name="correctRecord4"></textarea>
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">纠正结果</label>
+                      </div>
+                      <div class="col-7">
+                        <select class="form-select" name="correctResult4">
+                          <option value="问题已及时纠正">问题已及时纠正</option>
+                          <option value="仍有暂时无法纠正的问题，已限期整改">仍有暂时无法纠正的问题，已限期整改</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-1">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label">测试结果的正确性</label>
+                      </div>
+                      <div class="col-1">
+                      </div>
+                      <div class="col-4">
+                        <label class="form-radio form-inline">
+                          <input type="radio" name="c5" onchange = "change5(this.value)" checked="" value="合格"><i class="form-icon"></i> 合格
+                        </label>
+                        <label class="form-radio form-inline">
+                          <input type="radio" name="c5" onchange = "change5(this.value)" value="不合格"><i class="form-icon"></i> 不合格
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group" id="5_reason" style="display: none">
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">简要描述</label>
+                      </div>
+                      <div class="col-7">
+                        <input class="form-input" id="5_content" name="content5" placeholder="请对不合格的情况进行简要描述">
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">纠正过程记录</label>
+                      </div>
+                      <div class="col-7">
+                        <textarea class="form-input" placeholder="" rows="2" id="5_correctRecord"  name="correctRecord5"></textarea>
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">纠正结果</label>
+                      </div>
+                      <div class="col-7">
+                        <select class="form-select" name="correctResult5">
+                          <option value="问题已及时纠正">问题已及时纠正</option>
+                          <option value="仍有暂时无法纠正的问题，已限期整改">仍有暂时无法纠正的问题，已限期整改</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-1">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label">测试现场工作完毕不准遗留任何废物</label>
+                      </div>
+                      <div class="col-1">
+                      </div>
+                      <div class="col-4">
+                        <label class="form-radio form-inline">
+                          <input type="radio" name="c6" onchange = "change6(this.value)" checked="" value="合格"><i class="form-icon"></i> 合格
+                        </label>
+                        <label class="form-radio form-inline">
+                          <input type="radio" name="c6" onchange = "change6(this.value)" value="不合格"><i class="form-icon"></i> 不合格
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group" id="6_reason" style="display: none">
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">简要描述</label>
+                      </div>
+                      <div class="col-7">
+                        <input class="form-input" id="6_content" name="content6" placeholder="请对不合格的情况进行简要描述">
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">纠正过程记录</label>
+                      </div>
+                      <div class="col-7">
+                        <textarea class="form-input" placeholder="" rows="2" id="6_correctRecord"  name="correctRecord6"></textarea>
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-2">
+                        <label class="form-label"></label>
+                      </div>
+                      <div class="col-3">
+                        <label class="form-label">纠正结果</label>
+                      </div>
+                      <div class="col-7">
+                        <select class="form-select" name="correctResult6">
+                          <option value="问题已及时纠正">问题已及时纠正</option>
+                          <option value="仍有暂时无法纠正的问题，已限期整改">仍有暂时无法纠正的问题，已限期整改</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-2">
+                      </div>
+                      <div class="col-4">
+                        <button class="btn btn-primary input-group-btn" id="submit-button" type="submit" style="display:block;margin:0 auto">提交</button>
+                      </div>
+                      <div class="col-3">
+                        <button type="button" class="btn" id="back-button">返回</button>
+                      </div>
+                      <div class="col-3">
+                      </div>
+                    </div>
+                    <script>
+                      $('#submit-button').on('onsubmit',function(){
+                        $.ajax({
+                            type : 'POST',
+                            url : '/homePage/qualitysupervisionRecord?id={{id}}&password={{password}}&name={{name}}&acid={{acid}}&acname={{acname}}&originid={{originid}}',
+                            data : $("form").serialize()
+                        });
+                      });
+                      $('#back-button').on('click',function(){
+                        var gnl = confirm("确定要返回?");
+                        if (gnl == true){
+                          window.location.href = document.referrer;
+                        } else {
+                          return false;
+                        }
+                      });
+                    </script>  
+                  </form>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html> 

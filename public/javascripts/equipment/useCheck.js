@@ -63,53 +63,57 @@ function minus(name,telephone,organization) {
 // }
 // 获取人员姓名
 function getName(str) {
-  var xmlhttp, obj, obj_str;
-  if (window.XMLHttpRequest) {
-    // code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp = new XMLHttpRequest();
-  }
-  else {
-    // code for IE6, IE5
-    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-      obj_str = xmlhttp.responseText;
-      obj_str = obj_str.replace(/userName/g,"label");
-      obj_str = obj_str.replace(/name/g,"label");
-      obj = eval("(" + obj_str + ")");
-      // var part_1 = "";
-      // for (var i = 0; i < obj.length; i++) {
-      //   part_1 += "<option>" + obj[i].userName + "</option>";
-      // }
-      // var add = "" + part_1;
-      // document.getElementById("select_items").insertAdjacentHTML("beforeEnd",add);
-      searchbox(obj);
+  if(str !== "") {
+    var xmlhttp, obj, obj_str;
+    if (window.XMLHttpRequest) {
+      // code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp = new XMLHttpRequest();
     }
-  }
-  xmlhttp.open("GET","/homePage/checkName?name="+str,true);
-  xmlhttp.send();
-}
-function clearName(str) {
-  var xmlhttp, flag; //flag = 1表示未查到
-  if (window.XMLHttpRequest) {
-    // code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp = new XMLHttpRequest();
-  }
-  else {
-    // code for IE6, IE5
-    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-      flag = xmlhttp.responseText;
-      if(flag == "no") {
-        $("#project").val("")
+    else {
+      // code for IE6, IE5
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        obj_str = xmlhttp.responseText;
+        obj_str = obj_str.replace(/userName/g,"label");
+        obj_str = obj_str.replace(/name/g,"label");
+        obj = eval("(" + obj_str + ")");
+        // var part_1 = "";
+        // for (var i = 0; i < obj.length; i++) {
+        //   part_1 += "<option>" + obj[i].userName + "</option>";
+        // }
+        // var add = "" + part_1;
+        // document.getElementById("select_items").insertAdjacentHTML("beforeEnd",add);
+        searchbox(obj);
       }
     }
-  }
-  xmlhttp.open("GET","/homePage/clearName?name="+str,true);
-  xmlhttp.send();
+    xmlhttp.open("GET","/homePage/checkName?name="+str,true);
+    xmlhttp.send();
+  }  
+}
+function clearName(str) {
+  if (str !== "") {
+    var xmlhttp, flag; //flag = 1表示未查到
+    if (window.XMLHttpRequest) {
+      // code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp = new XMLHttpRequest();
+    }
+    else {
+      // code for IE6, IE5
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        flag = xmlhttp.responseText;
+        if(flag == "no") {
+          $("#project").val("")
+        }
+      }
+    }
+    xmlhttp.open("GET","/homePage/clearName?name="+str,true);
+    xmlhttp.send();
+  } 
 }
 // 模糊查询列表
 function searchbox(obj) {

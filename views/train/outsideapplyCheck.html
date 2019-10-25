@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="../../stylesheets/spectre.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-icons.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-exp.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-0.5.8/docs/dist/docs.min.css">
+  <link rel="stylesheet" href="../../stylesheets/jquery-ui.css">
+  <title>实验室管理系统</title>
+    <style type="text/css" rel="stylesheet">
+      .wrap{margin:0 auto;width:700px;} 
+    </style>
+  </head>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.5.0/js/md5.js"></script>
+  <script type="text/javascript" src="/javascripts/checkuserCookie.js"></script>
+  <script type="text/javascript" src="/javascripts/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="/javascripts/jquery-ui.min.js"></script>
+  <script type="text/javascript">
+    function judgelength() {
+      var gnl = confirm("确定要提交?");
+      if (gnl == true){
+        return true;
+      } else {
+        return false;
+      }
+    }
+  </script>
+  <body onload="checkuserCookie({{id}},'{{password}}','{{name}}')">
+    <div class="docs-container off-canvas off-canvas-sidebar-show">
+      <div class="docs-navbar"><a class="off-canvas-toggle btn btn-link btn-action" href="#sidebar"><i class="icon icon-menu"></i></a>
+        <ul class="tab">
+            <li class="tab-item"><a href="/homePage?id={{id}}&password={{password}}&name={{name}}">首页</a></li>
+            <li class="tab-item"><a href="/homePage/personal?id={{id}}&password={{password}}&name={{name}}" id="demo">{{name}}</a></li>
+            <li class="tab-item"><a href="/">退出</a></li>
+        </ul>
+      </div>
+      <div class="docs-sidebar off-canvas-sidebar" id="sidebar">
+        <div class="docs-brand">
+          <h3>实验室管理系统</h3>
+        </div>
+        <div class="docs-nav">
+          <div class="accordion-container">
+            <div class="accordion">
+              <input id="member" type="checkbox" name="docs-accordion-checkbox" hidden=""/>
+              <label class="accordion-header c-hand" for="member">人员</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="/homePage/memberList?id={{id}}&password={{password}}&name={{name}}">人员一览表</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/memberProfile?id={{id}}&password={{password}}&name={{name}}">人员档案登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/memberPost?id={{id}}&password={{password}}&name={{name}}">检测人员上岗审批</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/regularMeeting?id={{id}}&password={{password}}&name={{name}}">例会登记</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion">
+              <input id="accordion-getting-started" type="checkbox" name="docs-accordion-checkbox" hidden="" checked="checked"/>
+              <label class="accordion-header c-hand" for="accordion-getting-started">事件</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="">标准查新</a>
+                  </li>
+                  <li class="menu-item"><a href="">内审</a>
+                  </li>
+                  <li class="menu-item"><a href="">管理评审</a>
+                  </li>
+                  <li class="menu-item"><a href="/train?id={{id}}&password={{password}}&name={{name}}"><strong>人员培训</strong></a>
+                  </li>
+                  <li class="menu-item"><a href="">能力验证</a>
+                  </li>
+                  <li class="menu-item"><a href="">期间核查</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/activity?id={{id}}&password={{password}}&name={{name}}">测试活动</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/testProject?id={{id}}&password={{password}}&name={{name}}">测试项目</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/securityCheck?id={{id}}&password={{password}}&name={{name}}">安全检查</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/contract?id={{id}}&password={{password}}&name={{name}}">合同管理</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion">
+              <input id="equipment" type="checkbox" name="docs-accordion-checkbox" hidden=""/>
+              <label class="accordion-header c-hand" for="equipment">仪器设备</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="/homePage/list?id={{id}}&password={{password}}&name={{name}}">新设备入库</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/repair?id={{id}}&password={{password}}&name={{name}}">设备维修</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/maintenance?id={{id}}&password={{password}}&name={{name}}">设备保养</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/use?id={{id}}&password={{password}}&name={{name}}">设备使用登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/inout?id={{id}}&password={{password}}&name={{name}}">设备出入登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/outage?id={{id}}&password={{password}}&name={{name}}">设备停用申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/restoreOutage?id={{id}}&password={{password}}&name={{name}}">设备恢复使用申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/equipmentDisabled?id={{id}}&password={{password}}&name={{name}}">设备报废申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/adjust?id={{id}}&password={{password}}&name={{name}}">设备检定校准</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="off-canvas-content">
+        <div class="docs-content" id="content">
+          <div class="container" id="experimentals">
+            <h3 class="s-title">外出培训申请</h3>
+              <div class="docs-demo columns">
+                <div class="column col-9 col-sm-12">
+                  <form class="form-horizontal" action="" method="post" onsubmit="return judgelength()">
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">姓名</label>
+                      </div>
+                      <div class="col-9">
+                        <label class="form-label">{{datas.uname}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">部门</label>
+                      </div>
+                      <div class="col-9">
+                        <label class="form-label">{{datas.department}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">职务</label>
+                      </div>
+                      <div class="col-9">
+                        <label class="form-label">{{datas.duty}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">培训名称</label>
+                      </div>
+                      <div class="col-9">
+                        <label class="form-label">{{datas.tname}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">培训单位</label>
+                      </div>
+                      <div class="col-9">
+                        <label class="form-label">{{datas.organization}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">培训起止日期</label>
+                      </div>
+                      <div class="col-9">
+                        <div class="input-group">
+                          <label class="form-label">{{datas.start_time}}&nbsp;至&nbsp;{{datas.end_time}}</label>
+                          <input class="form-input" name="serialNumber" required="required" value="{{datas.serialNumber}}" readonly="readonly" style="display: none;">
+                          <input class="form-input" name="longTime" required="required" value="{{longTime}}" readonly="readonly" style="display: none;">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
+                        <label class="form-label">意见</label>
+                      </div>
+                      <div class="col-9">
+                        <label class="form-radio form-inline">
+                          <input type="radio" name="opinion" checked="" value="同意" onchange = "change1(this.value)"><i class="form-icon"></i> 同意
+                        </label>
+                        <label class="form-radio form-inline">
+                          <input type="radio" name="opinion" value="不同意" onchange = "change1(this.value)"><i class="form-icon"></i> 不同意并退回
+                        </label>
+                      </div>
+                    </div>
+                    <script>
+                      function change1(result) {
+                        if (result == "不同意") {
+                          $("#2_reason").show();
+                        }
+                        else {
+                          $("#2_reason").hide();
+                        }
+                      }
+                    </script>
+                    <div class="form-group" id="2_reason" style="display: none">
+                      <div class="col-3">
+                      </div>
+                      <div class="col-9">
+                        <input class="form-input" placeholder="若不同意请输入原因" name="remarks">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-2">
+                      </div>
+                      <div class="col-4">
+                        <button class="btn btn-primary input-group-btn" id="submit-button" type="submit" style="display:block;margin:0 auto">提交</button>
+                      </div>
+                      <div class="col-3">
+                        <button type="button" class="btn" id="back-button">返回</button>
+                      </div>
+                      <div class="col-3">
+                      </div>
+                    </div>
+                    <script>
+                      $('#submit-button').on('onsubmit',function(){
+                        $.ajax({
+                            type : 'POST',
+                            url : '/train/outsideapplyCheck?id={{id}}&password={{password}}&name={{name}}',
+                            data : $("form").serialize()
+                        });
+                      });
+                      $('#back-button').on('click',function(){
+                        var gnl = confirm("确定要返回?");
+                        if (gnl == true){
+                          javascript:history.go(-1);
+                        } else {
+                          return false;
+                        }
+                      });
+                    </script>  
+                  </form>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html> 

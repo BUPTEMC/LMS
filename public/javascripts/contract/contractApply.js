@@ -1,4 +1,15 @@
 function judgelength() {
+  var checkbox = document.getElementsByName('pname');
+  var num = 0;
+  for (var i = 0; i < checkbox.length; i++) {
+    if (checkbox[i].checked == true) {
+      num++;
+    }  
+  }
+  if (num < 1) {
+    alert("请勾选项目名称");
+    return false;
+  }
   var gnl = confirm("确定要提交?");
   if (gnl == true){
     return true;
