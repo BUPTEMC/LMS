@@ -7448,6 +7448,34 @@ router.get('/clearName2', function(req, res, next) {
         connection.release();  
     });    
 });
+router.post('/clearName2', function(req, res, next) {
+    pool.getConnection(function (err, connection) {
+        var param = req.query || req.params;
+        var name = "" + param.name;
+        if(name != ""){
+            connection.query("SELECT userName FROM user WHERE userName='" + name + "'", function (err, rows) {
+                if (err) {
+                    res.status(404).end(); 
+                } 
+                else {
+                    if (rows.length == 0) {
+                        return res.json({
+                            errCode : 0
+                        });
+                        // res.send("no");
+                    }
+                    else {
+                        return res.json({
+                            errCode : 1
+                        });
+                        // res.send("yes");
+                    }
+                }
+            });        
+        }  
+        connection.release();  
+    });    
+});
 router.post('/writeregularMeeting', function (req, res) {
     pool.getConnection(function (err, connection) {
         // cookie

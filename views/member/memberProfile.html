@@ -93,6 +93,18 @@
               </div>
             </div>
             <div class="accordion">
+              <input id="management" type="checkbox" name="docs-accordion-checkbox" hidden=""/>
+              <label class="accordion-header c-hand" for="management">管理体系</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="/fileManagement?id={{id}}&password={{password}}&name={{name}}">文件</a>
+                  </li>
+                  <li class="menu-item"><a href="/standard?id={{id}}&password={{password}}&name={{name}}">标准</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion">
               <input id="equipment" type="checkbox" name="docs-accordion-checkbox" hidden=""/>
               <label class="accordion-header c-hand" for="equipment">仪器设备</label>
               <div class="accordion-body">
@@ -205,7 +217,9 @@
                       </div>
                     </div>
                     <script type="text/javascript">
-                      $("[name='politics_status']").val('{{datas.politics_status}}');
+                      if ('{{datas.politics_status}}' !== "") {
+                        $("[name='politics_status']").val('{{datas.politics_status}}');
+                      }
                     </script>
                     <div class="form-group">
                       <div class="col-3">

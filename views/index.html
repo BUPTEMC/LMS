@@ -19,7 +19,7 @@
         <h1 align="center">实验室管理系统</h1>    
         <fieldset>
           <form  name="users" action="/users/login" method="post" onsubmit="setCookie()">
-              <p align="center">用户名: <input type="text" name="id" placeholder="请输入用户名"></p>
+              <p align="center">用户名: <input type="" name="id" placeholder="请输入用户名" oninput = "value=value.replace(/[^\d]/g,'')"></p>
               <p align="center">密&#12288;码: <input type="password" name="password" placeholder="请输入密码"></p>
               <div style="text-align:center">  
                 <input type="submit" class="login-button" value="登录">             

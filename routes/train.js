@@ -500,7 +500,6 @@ router.get('/outsiderecordDetail', function(req, res, next) {
         connection.release();
     });
 });
-// 上传分包方报告
 router.post('/certificateUpload',function(req,res){
     pool.getConnection(function (err, connection) {
         var param = req.query || req.params;
