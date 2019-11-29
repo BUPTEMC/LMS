@@ -123,6 +123,28 @@ router.post('/newStandard', function (req, res) {
         if (method_needed == "是") {
             state = "等待方法确认";
             var last_update_time = "";
+            var affair = "请完成新标准方法确认";
+            connection.query("SELECT * FROM user WHERE duty REGEXP '测试技术部主管'", function (err, rows) {
+                if (err) {
+                    res.status(404).end(); 
+                } 
+                else {
+                    var userid = rows[0].id;
+                    var dataform = "message_" + userid;
+                    var userpassword = rows[0].password;
+                    var username = rows[0].userName;
+                    var time = sd.format(new Date(), 'YYYY-MM-DD HH:mm');
+                    var link = '/standard/standardDetail?id=' + userid + '&password=' + userpassword + '&name=' + username + '&sid=' + sid + '&longTime=' + time;
+                    connection.query("INSERT INTO " + dataform + "(sender,time,affair,link) VALUES(?,?,?,?)", [cname,time,affair,link], function (err, rows) {
+                        if (err) {
+                            return res.json({
+                                errCode : 0,
+                                errMsg : '提交失败'
+                            });
+                        }
+                    });
+                }
+            });
         }
         else {
             state = "正常使用";
@@ -138,7 +160,7 @@ router.post('/newStandard', function (req, res) {
             else {
                 res.send("<script>alert('提交成功!');window.location.href = '/standard?id=" + id + "&password=" + password + "&name=" + cname +"';</script>");
             }      
-        });    
+        }); 
         connection.release();
     });  
 });
@@ -150,7 +172,18 @@ router.get('/standardDetail', function(req, res, next) {
         var password = "" + param.password;
         var name = "" + param.name;
         var sid = "" + param.sid;
+        var message_form = "message_" + id;
+        var longTime = "" + param.longTime;
         var duty,method_lenth;
+        if (longTime !== "") {
+            connection.query("UPDATE " + message_form + " SET see=1 WHERE time='" + longTime + "'", function (err, rows) {
+                if (err) {
+                    res.status(404).end();
+                }
+                else {
+                }
+            });
+        }
         connection.query("SELECT duty FROM user WHERE id=" + id, function (err, rows) {
             if (err) {
                 res.status(404).end(); 

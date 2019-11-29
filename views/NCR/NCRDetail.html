@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="../../stylesheets/spectre.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-icons.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-exp.min.css">
+  <link rel="stylesheet" href="../../stylesheets/spectre-0.5.8/docs/dist/docs.min.css">
+  <link rel="stylesheet" href="../../stylesheets/jquery-ui.css">
+  <title>实验室管理系统</title>
+    <style type="text/css" rel="stylesheet">
+      .wrap{margin:0 auto;width:700px;} 
+    </style>
+  </head>
+  <script src="https://cdn.bootcss.com/blueimp-md5/2.5.0/js/md5.js"></script>
+  <script type="text/javascript" src="/javascripts/checkuserCookie.js"></script>
+  <script type="text/javascript" src="/javascripts/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="/javascripts/jquery-ui.min.js"></script>
+  <script type="text/javascript">
+    var num = 0;
+    var length = 0;
+  </script>
+  <body onload="checkuserCookie({{id}},'{{password}}','{{name}}')">
+    <div class="docs-container off-canvas off-canvas-sidebar-show">
+      <div class="docs-navbar"><a class="off-canvas-toggle btn btn-link btn-action" href="#sidebar"><i class="icon icon-menu"></i></a>
+        <ul class="tab">
+            <li class="tab-item"><a href="/homePage?id={{id}}&password={{password}}&name={{name}}">首页</a></li>
+            <li class="tab-item"><a href="/homePage/personal?id={{id}}&password={{password}}&name={{name}}" id="demo">{{name}}</a></li>
+            <li class="tab-item"><a href="/">退出</a></li>
+        </ul>
+      </div>
+      <div class="docs-sidebar off-canvas-sidebar" id="sidebar">
+        <div class="docs-brand">
+          <h3>实验室管理系统</h3>
+        </div>
+        <div class="docs-nav">
+          <div class="accordion-container">
+            <div class="accordion">
+              <input id="member" type="checkbox" name="docs-accordion-checkbox" hidden=""/>
+              <label class="accordion-header c-hand" for="member">人员</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="/homePage/memberList?id={{id}}&password={{password}}&name={{name}}">人员一览表</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/memberProfile?id={{id}}&password={{password}}&name={{name}}">人员档案登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/memberPost?id={{id}}&password={{password}}&name={{name}}">检测人员上岗审批</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/regularMeeting?id={{id}}&password={{password}}&name={{name}}">例会登记</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion">
+              <input id="accordion-getting-started" type="checkbox" name="docs-accordion-checkbox" hidden=""/>
+              <label class="accordion-header c-hand" for="accordion-getting-started">事件</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="/update?id={{id}}&password={{password}}&name={{name}}">标准查新</a>
+                  </li>
+                  <li class="menu-item"><a href="">内审</a>
+                  </li>
+                  <li class="menu-item"><a href="">管理评审</a>
+                  </li>
+                  <li class="menu-item"><a href="/train?id={{id}}&password={{password}}&name={{name}}">人员培训</a>
+                  </li>
+                  <li class="menu-item"><a href="">能力验证</a>
+                  </li>
+                  <li class="menu-item"><a href="">期间核查</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/activity?id={{id}}&password={{password}}&name={{name}}">测试活动</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/testProject?id={{id}}&password={{password}}&name={{name}}">测试项目</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/securityCheck?id={{id}}&password={{password}}&name={{name}}">安全检查</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/contract?id={{id}}&password={{password}}&name={{name}}">合同管理</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion">
+              <input id="management" type="checkbox" name="docs-accordion-checkbox" hidden="" checked="checked"/>
+              <label class="accordion-header c-hand" for="management">管理体系</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="/fileManagement?id={{id}}&password={{password}}&name={{name}}">文件</a>
+                  </li>
+                  <li class="menu-item"><a href="/standard?id={{id}}&password={{password}}&name={{name}}">标准</a>
+                  </li>
+                  <li class="menu-item"><a href="/client?id={{id}}&password={{password}}&name={{name}}">客户管理</a>
+                  </li>
+                  <li class="menu-item"><a href="/NCR?id={{id}}&password={{password}}&name={{name}}"><strong>不符合项管理</strong></a>
+                  </li>
+                  <li class="menu-item"><a href="/precaution?id={{id}}&password={{password}}&name={{name}}">预防措施管理</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion">
+              <input id="equipment" type="checkbox" name="docs-accordion-checkbox" hidden=""/>
+              <label class="accordion-header c-hand" for="equipment">仪器设备</label>
+              <div class="accordion-body">
+                <ul class="menu menu-nav">
+                  <li class="menu-item"><a href="/homePage/list?id={{id}}&password={{password}}&name={{name}}">新设备入库</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/repair?id={{id}}&password={{password}}&name={{name}}">设备维修</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/maintenance?id={{id}}&password={{password}}&name={{name}}">设备保养</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/use?id={{id}}&password={{password}}&name={{name}}">设备使用登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/inout?id={{id}}&password={{password}}&name={{name}}">设备出入登记</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/outage?id={{id}}&password={{password}}&name={{name}}">设备停用申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/restoreOutage?id={{id}}&password={{password}}&name={{name}}">设备恢复使用申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/equipmentDisabled?id={{id}}&password={{password}}&name={{name}}">设备报废申请</a>
+                  </li>
+                  <li class="menu-item"><a href="/homePage/adjust?id={{id}}&password={{password}}&name={{name}}">设备检定校准</a>
+                  </li>
+                  <li class="menu-item"><a href="/IMC?id={{id}}&password={{password}}&name={{name}}">设备期间核查</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="off-canvas-content">
+        <div class="docs-content" id="content">
+          <div class="container" id="experimentals">
+            <h3 class="s-title">不符合项详情</h3>
+              <div class="docs-demo columns">
+              <div class="column col-12">
+                <ul class="step">
+                  <li class="step-item active" id="step1"><a class="tooltip" id="step1-a" data-tooltip="等待{{datas.applicant}}填写整改计划">等待填写整改计划</a></li>
+                  <li class="step-item" id="step2"><a class="tooltip" id="step2-a" data-tooltip="等待整改计划确认">等待确认整改计划</a></li>
+                  <li class="step-item" id="step3"><a class="tooltip" id="step3-a" data-tooltip="等待填写整改记录">等待填写整改记录</a></li>
+                  <li class="step-item" id="step4"><a class="tooltip" id="step4-a" data-tooltip="等待完成整改">完成整改</a></li>
+                </ul>
+                <table class="table table-striped table-hover" style="table-layout: fixed;">
+                  <thead>
+                    <tr>
+                      <th width="40%">项目</th>
+                      <th>内容/操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>不符合项编号</td>
+                      <td>{{datas.NCR_id}}</td>
+                    </tr>
+                    <tr>
+                      <td>状态</td>
+                      <td><strong>{{datas.state}}</strong></td>
+                    </tr>
+                    <tr>
+                      <td>不符合项来源类型</td>
+                      <td>{{datas.type}}</td>
+                    </tr>
+                    <tr id="source_id-tr">
+                      <td>关联任务</td>
+                      <td>{{datas.source_id}}</td>
+                    </tr>
+                    <tr>
+                      <td>不符合项来源</td>
+                      <td>{{datas.source}}</td>
+                    </tr>
+                    <tr>
+                      <td>不符合项问题简述</td>
+                      <td>{{datas.abstract}}</td>
+                    </tr>
+                    <tr>
+                      <td>创建人</td>
+                      <td>{{datas.applicant}}</td>
+                    </tr>
+                    <tr>
+                      <td>创建日期</td>
+                      <td>{{datas.date}}</td>
+                    </tr>
+                    <tr>
+                      <td><a href="/NCR/planDetail?id={{id}}&password={{password}}&name={{name}}&NCR_id={{datas.NCR_id}}" target="_blank">整改计划</a></td>
+                      <td id="plan_td"><button type="button" class="btn btn-sm" id="plan_button">申请计划</button></td>
+                    </tr>
+                    <tr>
+                      <td><a href="/NCR/recordDetail?id={{id}}&password={{password}}&name={{name}}&NCR_id={{datas.NCR_id}}" target="_blank">整改记录</a></td>
+                      <td id="record_td"><button type="button" class="btn btn-sm" id="record_button">填写记录</button></td>
+                    </tr>
+                    <script>
+                      var duty = "{{duty}}";
+                      if ("{{datas.source_id}}" == "" ) {
+                        $("#source_id-tr").remove();
+                      }
+                      if ("{{datas.state}}" !== "等待填写整改计划" || "{{datas.applicant}}" !== "{{name}}" ) {
+                        $("#plan_td").empty();
+                      }
+                      if ("{{datas.state}}" !== "等待填写整改记录") {
+                        $("#record_td").empty();
+                      }
+                      if (duty.indexOf("技术负责人") == -1 && duty.indexOf("质量负责人") == -1 && duty.indexOf("实验室主任") == -1) {
+                        $("#record_td").empty();
+                      }
+                    </script>
+                    <script>
+                      var duty = "{{duty}}";
+                      var verifier = "{{datas.verifier}}";
+                      if ("{{datas.state}}" == "等待确认整改计划" && duty.indexOf(verifier) !== -1) {
+                        $("#plan_td").empty();
+                        $("#plan_td").append("<button type='button' class='btn btn-sm' id='confirm_button'>确认计划</button>");
+                      }
+                    </script>
+                    <script>
+                      if ("{{datas.state}}" == "等待确认整改计划") {
+                        $("#step1").attr("class","step-item");
+                        $("#step1-a").attr("data-tooltip","整改计划填写完毕");
+                        $("#step2").attr("class","step-item active");
+                        $("#step2-a").attr("data-tooltip","等待{{datas.verifier}}确认整改计划");
+                        $("#step3").attr("class","step-item");
+                        $("#step4").attr("class","step-item");
+                      }
+                      if ("{{datas.state}}" == "等待填写整改记录") {
+                        $("#step1").attr("class","step-item");
+                        $("#step1-a").attr("data-tooltip","整改计划填写完毕");
+                        $("#step2").attr("class","step-item");
+                        $("#step2-a").attr("data-tooltip","整改计划确认完毕");
+                        $("#step3").attr("class","step-item active");
+                        $("#step4").attr("class","step-item");
+                      }
+                      if ("{{datas.state}}" == "完成整改") {
+                        $("#step1").attr("class","step-item");
+                        $("#step1-a").attr("data-tooltip","整改计划填写完毕");
+                        $("#step2").attr("class","step-item");
+                        $("#step2-a").attr("data-tooltip","整改计划确认完毕");
+                        $("#step3").attr("class","step-item");
+                        $("#step3-a").attr("data-tooltip","整改记录填写完毕");
+                        $("#step4").attr("class","step-item active");
+                        $("#step4-a").attr("data-tooltip","完成整改");
+                      }
+                    </script>
+                    <script>
+                      $('#plan_button').on('click',function(){
+                        window.open("/NCR/NCRplan?id={{id}}&password={{password}}&name={{name}}&NCR_id={{datas.NCR_id}}","_blank");
+                      });
+                      $('#record_button').on('click',function(){
+                        window.open("/NCR/NCRrecord?id={{id}}&password={{password}}&name={{name}}&NCR_id={{datas.NCR_id}}","_blank");
+                      });
+                      $('#confirm_button').on('click',function(){
+                        window.open("/NCR/NCRconfirm?id={{id}}&password={{password}}&name={{name}}&NCR_id={{datas.NCR_id}}&longTime={{datas.longTime}}","_blank");
+                      });
+                    </script>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html> 

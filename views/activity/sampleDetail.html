@@ -61,7 +61,7 @@
               <label class="accordion-header c-hand" for="accordion-getting-started">事件</label>
               <div class="accordion-body">
                 <ul class="menu menu-nav">
-                  <li class="menu-item"><a href="">标准查新</a>
+                  <li class="menu-item"><a href="/update?id={{id}}&password={{password}}&name={{name}}">标准查新</a>
                   </li>
                   <li class="menu-item"><a href="">内审</a>
                   </li>
@@ -93,6 +93,12 @@
                   </li>
                   <li class="menu-item"><a href="/standard?id={{id}}&password={{password}}&name={{name}}">标准</a>
                   </li>
+                  <li class="menu-item"><a href="/client?id={{id}}&password={{password}}&name={{name}}">客户管理</a>
+                  </li>
+                  <li class="menu-item"><a href="/NCR?id={{id}}&password={{password}}&name={{name}}">不符合项管理</a>
+                  </li>
+                  <li class="menu-item"><a href="/precaution?id={{id}}&password={{password}}&name={{name}}">预防措施管理</a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -118,6 +124,8 @@
                   <li class="menu-item"><a href="/homePage/equipmentDisabled?id={{id}}&password={{password}}&name={{name}}">设备报废申请</a>
                   </li>
                   <li class="menu-item"><a href="/homePage/adjust?id={{id}}&password={{password}}&name={{name}}">设备检定校准</a>
+                  </li>
+                  <li class="menu-item"><a href="/IMC?id={{id}}&password={{password}}&name={{name}}">设备期间核查</a>
                   </li>
                 </ul>
               </div>
@@ -202,6 +210,30 @@
                       </div>
                       <div class="col-8">
                         <a href="{{datas.sampleaddressUrl}}" download="抽样地点图示"><button type="button" class="btn btn-sm">下载图示</button></a>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-4">
+                        <label class="form-label">技术负责人姓名</label>
+                      </div>
+                      <div class="col-8">
+                        <label class="form-label">{{datas.techName}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-4">
+                        <label class="form-label">意见</label>
+                      </div>
+                      <div class="col-8">
+                        <label class="form-label">{{datas.opinion}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-4">
+                        <label class="form-label">不同意原因</label>
+                      </div>
+                      <div class="col-8">
+                        <label class="form-label">{{datas.opinionRemarks}}</label>
                       </div>
                     </div>
                     <div class="form-group">

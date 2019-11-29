@@ -2651,7 +2651,7 @@ router.get('/testprojectApply', function (req, res, next) {
         var id = "" + param.id;
         var password = "" + param.password;
         var name = "" + param.name;
-        var datas1,datas2,datas;
+        var datas1,datas2,datas3,datas;
         connection.query("SELECT id,name FROM equipment WHERE putaway='入库'", function (err, rows) {
             if (err) {
                 res.status(404).end(); 
@@ -2666,6 +2666,14 @@ router.get('/testprojectApply', function (req, res, next) {
             } 
             else {
                 datas2 = rows[0]; 
+            }
+        });
+        connection.query("SELECT * FROM standard WHERE state='正常使用'", function (err, rows) {
+            if (err) {
+                res.status(404).end(); 
+            } 
+            else {
+                datas3 = rows; 
             }
         });
         connection.query("SELECT duty FROM user WHERE id=" + id, function (err, rows) {
@@ -2683,7 +2691,7 @@ router.get('/testprojectApply', function (req, res, next) {
                             res.status(404).end(); 
                         } 
                         else {
-                            res.render('testproject/projectApply', {datas1:datas1,datas2:datas2,datas:rows,id:id,password:password,name:name});
+                            res.render('testproject/projectApply', {datas1:datas1,datas2:datas2,datas3:datas3,datas:rows,id:id,password:password,name:name});
                         }   
                     });       
                 }
@@ -5478,6 +5486,36 @@ router.post('/sampleapplyCheck', function (req, res) {
         var opinionRemarks = "" + req.body.opinionRemarks;
         var zero = 0;
         var one = 1;
+        var affair = "抽样计划已审批";
+        connection.query("SELECT * FROM activity_sample_apply WHERE acid='" + acid + "'", function (err, rows) {
+            if (err) {
+                res.status(404).end(); 
+            } 
+            else {
+                var applicant = rows[0].applicant;
+                connection.query("SELECT * FROM user WHERE userName='" + applicant + "'", function (err, rows) {
+                    if (err) {
+                        res.status(404).end(); 
+                    } 
+                    else {
+                        var userid = rows[0].id;
+                        var dataform = "message_" + userid;
+                        var userpassword = rows[0].password;
+                        var username = rows[0].userName;
+                        var time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
+                        var link = '/homePage/sampleDetail?id=' + userid + '&password=' + userpassword + '&name=' + username + '&acid=' + acid + '&longTime=' + time;
+                        connection.query("INSERT INTO " + dataform + "(sender,time,affair,link) VALUES(?,?,?,?)", [cname,time,affair,link], function (err, rows) {
+                            if (err) {
+                                return res.json({
+                                    errCode : 0,
+                                    errMsg : '提交失败'
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
         connection.query("UPDATE " + message_form + " SET see=1 WHERE time='" + longTime + "'", function (err, rows) {
             if (err) {
                 res.status(404).end();
@@ -5517,25 +5555,28 @@ router.get('/sampleDetail', function (req, res, next) {
         var password = "" + param.password;
         var name = "" + param.name; 
         var acid = "" + param.acid;
+        var longTime = "" + param.longTime;
+        var message_form = "message_" + id;
+        if (longTime !== "") {
+            connection.query("UPDATE " + message_form + " SET see=1 WHERE time='" + longTime + "'", function (err, rows) {
+                if (err) {
+                    res.status(404).end();
+                }
+            });
+        }
         connection.query("SELECT * FROM activity WHERE acid='" + acid + "'", function (err, rows) {
             if (err) {
                 res.status(404).end(); 
             } 
             else {
-                var issample = rows[0].issample;
-                if(issample == 0){
-                    res.send("<script>alert('抽样计划未通过');window.history.go(-1)</script>");
-                } 
-                else{
-                    connection.query("SELECT * FROM activity_sample_apply WHERE acid='" + acid + "' AND opinion='同意'", function (err, rows) {
-                        if (err) {
-                            res.status(404).end();
-                        } 
-                        else {
-                            res.render('activity/sampleDetail', {datas:rows[0],id:id,password:password,name:name,acid:acid});
-                        }
-                    });       
-                }
+                connection.query("SELECT * FROM activity_sample_apply WHERE acid='" + acid + "' order by serialNumber desc", function (err, rows) {
+                    if (err) {
+                        res.status(404).end();
+                    } 
+                    else {
+                        res.render('activity/sampleDetail', {datas:rows[0],id:id,password:password,name:name,acid:acid});
+                    }
+                });
             }
         }); 
         connection.release();   
@@ -5628,12 +5669,12 @@ router.get('/missionRecord', function (req, res, next) {
                 } 
                 else {
                     pname = rows[0].pname;
-                    connection.query("SELECT * FROM testproject WHERE name='" + pname + "'", function (err, rows) {
+                    connection.query("SELECT * FROM standard WHERE state='正常使用'", function (err, rows) {
                         if (err) {
                             res.status(404).end(); 
                         } 
                         else {
-                            datas2 = rows[0].criterion;
+                            datas2 = rows;
                             connection.query("SELECT * FROM contract WHERE conname='" + relatedName + "'", function (err, rows) {
                                 if (err) {
                                     res.status(404).end(); 
@@ -5993,10 +6034,8 @@ router.post('/objsampleRecord', function (req, res) {
         var type = "" + req.body.type;
         var lola = "" + req.body.lola;
         var environmentUrl = "" + req.body.environmentUrl;
-        var opinion = "" + req.body.opinion;
-        var opinionRemarks = "" + req.body.opinionRemarks;
         var advice = "" + req.body.advice;
-        connection.query('INSERT INTO activity_sampledetail_record(acid,acname,pname,ypid,ypname,testMember,date,position,type,lola,environmentUrl,opinion,opinionRemarks,advice) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [acid,acname,pname,ypid,ypname,testMember,date,position,type,lola,environmentUrl,opinion,opinionRemarks,advice], function (err, rows) {
+        connection.query('INSERT INTO activity_sampledetail_record(acid,acname,pname,ypid,ypname,testMember,date,position,type,lola,environmentUrl,advice) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)', [acid,acname,pname,ypid,ypname,testMember,date,position,type,lola,environmentUrl,advice], function (err, rows) {
             if (err) {
                 return res.json({
                     errCode : 0,
@@ -6342,11 +6381,12 @@ router.post('/originRecord', function (req, res) {
         var temperature = "" + req.body.temperature;
         var humidity = "" + req.body.humidity;
         var eid = "" + req.body.eid;
+        var criterion = "" + req.body.criterion;
         var environmentshowUrl = "" + req.body.environmentshowUrl;
         var testresultUrl = "" + req.body.testresultUrl;
         var measureMan = "" + req.body.measureMan;
         var adjustMan = "" + req.body.adjustMan;
-        connection.query('INSERT INTO activity_origin_record(acid,acname,originid,originname,organization,pname,testDate,testPosition,weather,temperature,humidity,eid,environmentshowUrl,testresultUrl,measureMan,adjustMan) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [acid,acname,originid,originname,organization,pname,testDate,testPosition,weather,temperature,humidity,eid,environmentshowUrl,testresultUrl,measureMan,adjustMan], function (err, rows) {
+        connection.query('INSERT INTO activity_origin_record(acid,acname,originid,originname,organization,pname,testDate,testPosition,weather,temperature,humidity,eid,criterion,environmentshowUrl,testresultUrl,measureMan,adjustMan) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [acid,acname,originid,originname,organization,pname,testDate,testPosition,weather,temperature,humidity,eid,criterion,environmentshowUrl,testresultUrl,measureMan,adjustMan], function (err, rows) {
             if (err) {
                 return res.json({
                     errCode : 0,
@@ -6688,7 +6728,16 @@ router.get('/testReport', function (req, res, next) {
         var originid = "" + param.originid;
         var year_,num_,last,num,year;
         var EIDs = "", sqltest = "", datas1,datas,length;
-        if (actype == "委托检测") {
+        connection.query("SELECT * FROM activity_testreport WHERE originid='" + originid + "' AND finalOpinion='同意'", function (err, rows) {
+            if (err) {
+                res.status(404).end(); 
+            } 
+            else {
+                if (rows.length !== 0) {
+                    res.send("<script>alert('已完成测试报告');window.location.href = '/homePage/originrecordDetail?id=" + id + "&password=" + password + "&name=" + name + "&acid=" + acid + "&acname=" + acname + "';</script>");
+                }
+                else {
+                    if (actype == "委托检测") {
             connection.query("SELECT * FROM activity_origin_record WHERE originid='" + originid + "'", function (err, rows) {
                 if (err) {
                     res.status(404).end(); 
@@ -6824,7 +6873,11 @@ router.get('/testReport', function (req, res, next) {
                 }
             });                    
                            
-        }                 
+        }
+                }
+            }
+        }); 
+                         
     });    
 });
 router.post('/testReport', function (req, res) {
@@ -6855,6 +6908,7 @@ router.post('/testReport', function (req, res) {
         var po = "" + req.body.po;
         var ty = "" + req.body.ty;
         var lo = "" + req.body.lo;
+        var datacompareUrl = "" + req.body.datacompareUrl;
         var testresultUrl = "" + req.body.testresultUrl;
         var conclusion = "" + req.body.conclusion;
         var uncertaintyUrl = "" + req.body.uncertaintyUrl;
@@ -6882,7 +6936,7 @@ router.post('/testReport', function (req, res) {
                         });
                     }
                     else {
-                        connection.query('INSERT INTO activity_testreport(texting,year,num,acid,acname,originid,reportid,organization,pname,testDate,weather,temperature,humidity,eid,criterion,sampleneeded,ypid,po,ty,lo,testresultUrl,conclusion,uncertaintyUrl,environmentshowUrl,c1,divreportUrl,applicant) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [one,year,num,acid,acname,originid,reportid,organization,pname,testDate,weather,temperature,humidity,eid,criterion,sampleneeded,ypid,po,ty,lo,testresultUrl,conclusion,uncertaintyUrl,environmentshowUrl,c1,divreportUrl,cname], function (err, rows) {
+                        connection.query('INSERT INTO activity_testreport(texting,year,num,acid,acname,originid,reportid,organization,pname,testDate,weather,temperature,humidity,eid,criterion,sampleneeded,ypid,po,ty,lo,testresultUrl,conclusion,datacompareUrl,uncertaintyUrl,environmentshowUrl,c1,divreportUrl,applicant) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [one,year,num,acid,acname,originid,reportid,organization,pname,testDate,weather,temperature,humidity,eid,criterion,sampleneeded,ypid,po,ty,lo,testresultUrl,conclusion,datacompareUrl,uncertaintyUrl,environmentshowUrl,c1,divreportUrl,cname], function (err, rows) {
                             if (err) {
                                 console.log(err);
                             } else {
@@ -6978,7 +7032,6 @@ router.post('/testreportCheck', function (req, res) {
         // 表单
         var acid = "" + req.body.acid;
         var acname = "" + req.body.acname;
-        var doc = "" + req.body.doc;
         var explanation = "" + req.body.explanation;
         var opinion = "" + req.body.opinion;
         var remarks = "" + req.body.remarks;
@@ -7010,7 +7063,7 @@ router.post('/testreportCheck', function (req, res) {
                             });
                         }
                         else {
-                            connection.query('UPDATE activity_testreport set doc=?,explanation=?,techName=?,opinion=?,remarks=? WHERE reportid=?', [doc,explanation,cname,opinion,remarks,reportid], function (err, rows) {
+                            connection.query('UPDATE activity_testreport set explanation=?,techName=?,opinion=?,remarks=? WHERE reportid=?', [explanation,cname,opinion,remarks,reportid], function (err, rows) {
                                 if (err) {
                                     return res.json({
                                         errCode : 0,
@@ -7031,7 +7084,7 @@ router.post('/testreportCheck', function (req, res) {
                     res.status(404).end();
                 }
                 else {
-                    connection.query('UPDATE activity_testreport set texting=?,doc=?,explanation=?,techName=?,opinion=?,remarks=? WHERE reportid=?', [zero,doc,explanation,cname,opinion,remarks,reportid], function (err, rows) {
+                    connection.query('UPDATE activity_testreport set texting=?,explanation=?,techName=?,opinion=?,remarks=? WHERE reportid=?', [zero,explanation,cname,opinion,remarks,reportid], function (err, rows) {
                         if (err) {
                             return res.json({
                                 errCode : 0,
@@ -7129,7 +7182,6 @@ router.post('/testreportfinalCheck', function (req, res) {
         // 表单
         var acid = "" + req.body.acid;
         var acname = "" + req.body.acname;
-        var doc = "" + req.body.doc;
         var explanation = "" + req.body.explanation;
         var opinion = "" + req.body.opinion;
         var remarks = "" + req.body.remarks;
@@ -7140,7 +7192,7 @@ router.post('/testreportfinalCheck', function (req, res) {
                 res.status(404).end();
             }
             else {
-                connection.query('UPDATE activity_testreport set texting=?,doc=?,explanation=?,chairmanName=?,finalOpinion=?,finalRemarks=? WHERE reportid=?', [zero,doc,explanation,cname,opinion,remarks,reportid], function (err, rows) {
+                connection.query('UPDATE activity_testreport set texting=?,explanation=?,chairmanName=?,finalOpinion=?,finalRemarks=? WHERE reportid=?', [zero,explanation,cname,opinion,remarks,reportid], function (err, rows) {
                     if (err) {
                         return res.json({
                             errCode : 0,

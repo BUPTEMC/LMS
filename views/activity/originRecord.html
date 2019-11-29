@@ -116,7 +116,7 @@
               <label class="accordion-header c-hand" for="accordion-getting-started">事件</label>
               <div class="accordion-body">
                 <ul class="menu menu-nav">
-                  <li class="menu-item"><a href="">标准查新</a>
+                  <li class="menu-item"><a href="/update?id={{id}}&password={{password}}&name={{name}}">标准查新</a>
                   </li>
                   <li class="menu-item"><a href="">内审</a>
                   </li>
@@ -148,6 +148,12 @@
                   </li>
                   <li class="menu-item"><a href="/standard?id={{id}}&password={{password}}&name={{name}}">标准</a>
                   </li>
+                  <li class="menu-item"><a href="/client?id={{id}}&password={{password}}&name={{name}}">客户管理</a>
+                  </li>
+                  <li class="menu-item"><a href="/NCR?id={{id}}&password={{password}}&name={{name}}">不符合项管理</a>
+                  </li>
+                  <li class="menu-item"><a href="/precaution?id={{id}}&password={{password}}&name={{name}}">预防措施管理</a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -173,6 +179,8 @@
                   <li class="menu-item"><a href="/homePage/equipmentDisabled?id={{id}}&password={{password}}&name={{name}}">设备报废申请</a>
                   </li>
                   <li class="menu-item"><a href="/homePage/adjust?id={{id}}&password={{password}}&name={{name}}">设备检定校准</a>
+                  </li>
+                  <li class="menu-item"><a href="/IMC?id={{id}}&password={{password}}&name={{name}}">设备期间核查</a>
                   </li>
                 </ul>
               </div>
@@ -271,7 +279,10 @@
                         <label class="form-label">环境温度</label>
                       </div>
                       <div class="col-9">
-                        <input class="form-input" name="temperature" required="required" placeholder="示例：xx℃~xx℃">
+                        <div class="input-group">
+                          <input class="form-input" name="temperature" required="required" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="25">
+                          <span class="input-group-addon">℃</span>
+                        </div>
                       </div>
                     </div>
                     <div class="form-group">
@@ -289,9 +300,49 @@
                       <div class="col-9">
                         {{each datas as value index}}
                           <label class="form-checkbox form-inline">
-                            <input type="checkbox" name="eid" value="{{value.id}}"><i class="form-icon"></i> <a href = "javascript:void(0)" onclick = "accuracy('{{value.accuracyItem}}','{{value.accuracyRange}}','{{value.name}}','{{value.version}}')">{{value.id}}</a>
+                            <input type="checkbox" name="eid" value="{{value.id}}"><i class="form-icon"></i> <a href = "#example-modal-2" onclick = "accuracy('{{value.accuracyItem}}','{{value.accuracyRange}}','{{value.name}}','{{value.version}}')">{{value.id}}</a>
                           </label>
                         {{/each}}
+                        <div class="modal modal-sm" id="example-modal-2"><a class="modal-overlay" href="#modals-sizes" aria-label="Close"></a>
+                          <div class="modal-container" role="document">
+                            <div class="modal-header"><a class="btn btn-clear float-right" href="#modals-sizes" aria-label="Close"></a>
+                              <div class="modal-title h5">仪器基本信息</div>
+                            </div>
+                            <div class="modal-body">
+                              <div class="content">
+                                <div id="adjustItem">
+                                  <div>
+                                    <table class="table">
+                                      <thead>
+                                        <tr>
+                                          <th>项目</th>
+                                          <th>内容</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody id="adjustItem_tbody">
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                                <!-- <form>
+                                  <div class="form-group">
+                                    <label class="form-label" for="input-example-7">Name</label>
+                                    <input class="form-input" id="input-example-7" type="text" placeholder="Name">
+                                  </div>
+                                  <div class="form-group">
+                                    <label class="form-label">Gender</label>
+                                    <label class="form-radio">
+                                      <input type="radio" name="gender"><i class="form-icon"></i> Male
+                                    </label>
+                                    <label class="form-radio">
+                                      <input type="radio" name="gender" checked=""><i class="form-icon"></i> Female
+                                    </label>
+                                  </div>
+                                </form> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <script>
@@ -313,6 +364,10 @@
                         <label class="form-label">检测依据/测试标准</label>
                       </div>
                       <div class="col-9">
+                        <label class="form-label">
+                          {{datas1.criterion}}
+                          <input class="form-input" name="criterion" required="required" value="{{datas1.criterion}}" style="display:none">
+                        </label>
                       </div>
                     </div>
                     <div class="form-group">
@@ -321,7 +376,8 @@
                       </div>
                       <div class="col-9">
                         <input class="form-input" id="input-example-10" type="file" name="credit" accept="image/*" onchange="fileUpload()" style="display:none">
-                        <button type="button" class="btn btn-sm" id="1_button">点击上传附件</button>
+                        <button type="button" class="btn btn-sm" id="1_button">上传附件(图片文件)</button>
+                        <span class="chip" id="sampleaddress_chip" style="display: none;"></span>
                       </div>
                     </div>
                     <script>
@@ -330,6 +386,7 @@
                       });
                       function fileUpload() {
                         var myPhoto = $('#input-example-10')[0].files[0];
+                        var filename = $('#input-example-10')[0].files[0].name;
                         var oMyForm = new FormData();
                         oMyForm.append("name", 'crazyJiaLin');
                         oMyForm.append("userfile", myPhoto);
@@ -350,6 +407,10 @@
                               else {
                                 isClick1 = false;
                               }
+                            var her = "<a href='" + data.uploadPath + "' target='_blank'>" + filename + "</a>";
+                            var chip = her + "<i class='form-icon icon icon-check'></i>";
+                            $("#sampleaddress_chip").show();
+                            $("#sampleaddress_chip").html(chip);
                             $('#imgUrl1').val(data.uploadPath); 
                         }).fail(function(err){
                             console.error(err);
@@ -370,7 +431,8 @@
                       </div>
                       <div class="col-9">
                         <input class="form-input" id="input-example-11" type="file" accept="application/pdf" onchange="fileUpload2()" style="display:none">
-                        <button type="button" class="btn btn-sm" id="2_button">点击上传附件</button>
+                        <button type="button" class="btn btn-sm" id="2_button">上传附件(.pdf)</button>
+                        <span class="chip" id="sampleaddress_chip2" style="display: none;"></span>
                       </div>
                     </div>
                     <script>
@@ -379,6 +441,7 @@
                       });
                       function fileUpload2() {
                         var myPhoto = $('#input-example-11')[0].files[0];
+                        var filename = $('#input-example-11')[0].files[0].name;
                         var oMyForm = new FormData();
                         oMyForm.append("name", 'crazyJiaLin');
                         oMyForm.append("userfile", myPhoto);
@@ -399,6 +462,10 @@
                               else {
                                 isClick2 = false;
                               }
+                            var her = "<a href='" + data.uploadPath + "' target='_blank'>" + filename + "</a>";
+                            var chip = her + "<i class='form-icon icon icon-check'></i>";
+                            $("#sampleaddress_chip2").show();
+                            $("#sampleaddress_chip2").html(chip);
                             $('#imgUrl2').val(data.uploadPath); 
                         }).fail(function(err){
                             console.error(err);

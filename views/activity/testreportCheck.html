@@ -72,7 +72,7 @@
               <label class="accordion-header c-hand" for="accordion-getting-started">事件</label>
               <div class="accordion-body">
                 <ul class="menu menu-nav">
-                  <li class="menu-item"><a href="">标准查新</a>
+                  <li class="menu-item"><a href="/update?id={{id}}&password={{password}}&name={{name}}">标准查新</a>
                   </li>
                   <li class="menu-item"><a href="">内审</a>
                   </li>
@@ -104,6 +104,12 @@
                   </li>
                   <li class="menu-item"><a href="/standard?id={{id}}&password={{password}}&name={{name}}">标准</a>
                   </li>
+                  <li class="menu-item"><a href="/client?id={{id}}&password={{password}}&name={{name}}">客户管理</a>
+                  </li>
+                  <li class="menu-item"><a href="/NCR?id={{id}}&password={{password}}&name={{name}}">不符合项管理</a>
+                  </li>
+                  <li class="menu-item"><a href="/precaution?id={{id}}&password={{password}}&name={{name}}">预防措施管理</a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -129,6 +135,8 @@
                   <li class="menu-item"><a href="/homePage/equipmentDisabled?id={{id}}&password={{password}}&name={{name}}">设备报废申请</a>
                   </li>
                   <li class="menu-item"><a href="/homePage/adjust?id={{id}}&password={{password}}&name={{name}}">设备检定校准</a>
+                  </li>
+                  <li class="menu-item"><a href="/IMC?id={{id}}&password={{password}}&name={{name}}">设备期间核查</a>
                   </li>
                 </ul>
               </div>
@@ -299,6 +307,14 @@
                     </div>
                     <div class="form-group">
                       <div class="col-3">
+                        <label class="form-label">数据处理或比对结果</label>
+                      </div>
+                      <div class="col-9">
+                        <a href="{{datas.datacompareUrl}}" download="数据处理或比对结果"><button type="button" class="btn btn-sm">下载结果</button></a>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-3">
                         <label class="form-label">检测结论</label>
                       </div>
                       <div class="col-9">
@@ -340,26 +356,16 @@
                     </script>
                     <div class="form-group">
                       <div class="col-3">
-                        <label class="form-label">符合性声明</label>
+                        <label class="form-label">检测报告的说明</label>
                       </div>
                       <div class="col-9">
-                        <textarea class="form-input" placeholder="可以从以下方面进行说明：
-a. 符合性声明适用的结果；
-b. 满足或不满足的规范、标准或其中的部分；
-c. 应用的判定规则（除非规范或标准中已包含）。" rows="6" name="doc"></textarea>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-3">
-                        <label class="form-label">意见和解释</label>
-                      </div>
-                      <div class="col-9">
-                        <textarea class="form-input" placeholder="可以从以下方面进行说明：
-a. 对声明结果符合/不符合要求的意见；
-b. 满足合同要求；
-c. 对结果如何使用的推荐性意见；
-d. 用于改进的指导。
-" rows="6" name="explanation"></textarea>
+                        <textarea class="form-input" placeholder="示例：
+1.本报告的版权及最终解释权属xxx所有
+2.报告无本单位测试报告章无效
+3.报告涂改无效
+4.对测试报告如有异议，请于收到报告之日起两个月内以书面形式向本机构提出，逾期不予受理
+5.本次实验结果仅与被检测物品有关
+" rows="7" name="explanation"></textarea>
                       </div>
                     </div>
                     <div class="form-group">
