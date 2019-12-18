@@ -89,15 +89,15 @@ app.js|程序启动入口
 推荐到nodejs官网下载最新版本。
 
 #### nodejs配置
-1. 启动命令行或PS，切换到*MysqlDemo*目录下输入`npm body-parser`，等待安装完成
+1. 启动命令行或PS，切换到*LMS-masteer*目录下输入`npm install body-parser`，等待安装完成
 
-2. 输入`npm ejs`，等待安装完成
+2. 输入`npm install ejs`，等待安装完成
 
-3. 输入`npm silly-datetime`，等待安装完成
+3. 输入`npm install silly-datetime`，等待安装完成
 
-4. 输入`npm dateformat`，等待安装完成
+4. 输入`npm install dateformat`，等待安装完成
 
-5. 输入`npm formidable`，等待安装完成
+5. 输入`npm install formidable`，等待安装完成
 
 6. 完成nodejs配置
 
@@ -105,6 +105,6 @@ app.js|程序启动入口
 ---
 1. 启动命令行或PS，切换到*mysql\bin*目录下输入`net start mysql`启动mysql
 
-2. 再开启一个命令行或PS，切换到*MysqlDemo*目录下输入`npm start`
+2. 再开启一个命令行或PS，切换到*LMS-masteer*目录下输入`npm start`
 
 3. 在浏览器中输入`localhost:3000`或`本机ipv4地址:3000`即可访问系统主页，开始使用
